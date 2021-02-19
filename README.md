@@ -434,7 +434,9 @@ Well for one, our url used to look a little like this:
 
 Now it looks a little something like this: `http://localhost:3000/posts/3`.
 
-The `:post_id` parameter is missing! Well, actually... it's not, remember when we mentioned that it was just a placeholder, well that's exactly what it is. A placeholder until we send a specific data point to navigate to. Now that we selected our data point `React Router` goes, "Oh so you want that specific item? No problem, I got you!" and badabing badaboom theres our specific blog post!
+The `:post_id` parameter is missing! Well, actually... it's not, remember when we mentioned that it was just a placeholder, well that's exactly what it is. A placeholder until we send a specific data point to navigate to. 
+- Let's look at the `PostCard` component in our `components` folder.
+- Notice how it is using `react-router-dom`'s `<Link />` component to dynamicall render posts with different ids.
 
 But wait, why are we still seeing all of the posts? Something tells me we might need a `Switch`.
 
