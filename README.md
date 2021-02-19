@@ -335,10 +335,45 @@ First let's get our navigation links set up, we'll be doing this using the `<Nav
 </nav>
 ```
 
-Your `App.js` return should look like the following:
+<details><summary>Your <code>App.js</code> return should look like this:</summary>
+
+  ```js
+  return (
+    <div className="App">
+      <div className="links">
+        <nav>
+          <NavLink to="/" activeClassName="active" >
+            Home
+          </NavLink>
+          <NavLink to="/posts" activeClassName="active">
+            Posts
+          </NavLink>
+        </nav>
+      </div>
+
+      <main>
+        <Route exact path="/" component={props => <Home {...props} name="Owls" />} />
+      </main>
+    </div>
+  )
+  ```
+
+</details>
+
+So you may have noticed that we've been using something called `exact` when writing our routes.
+- What exactly is `exact`?
+- `Exact` is a way for us to tell `React Router` that we want an **exact** match in our urls.
+- Typically, you'll only use `exact` to render a homepage component when you application loads
+
+First let's display all of the posts on our blog and our home page. Add in the following line between the two `<main></main>` tags and after our first `<Route>`:
 
 ```js
-return (
+<Route path="/posts" component={(props) => <Posts {...props} />} />
+```
+
+<details><summary>Your <code>App.js</code> should now look like this:</summary>
+
+  ```jsx
   <div className="App">
     <div className="links">
       <nav>
@@ -352,45 +387,13 @@ return (
     </div>
 
     <main>
-      <Route exact path="/" component={props => <Home {...props} name="Owls" />} />
+      <Route exact path="/" component={(props) => <Home {...props} name="Owls" />} />
+      <Route path="/posts" component={(props) => <Posts {...props} />} />
     </main>
   </div>
-)
-```
-
-So you may have noticed that we've been using something called `exact` when writing our routes.
-- What exactly is `exact`?
-- `Exact` is a way for us to tell `React Router` that we want an **exact** match in our urls.
-- Typically, you'll only use `exact` to render a homepage component when you application loads
-
-First let's display all of the posts on our blog and our home page. Add in the following line between the two `<main></main>` tags and after our first `<Route>`:
-
-```js
-<Route path="/posts" component={(props) => <Posts {...props} />} />
-```
-
-You should now have the following:
-
-```jsx
-<div className="App">
-  <div className="links">
-    <nav>
-      <NavLink to="/" activeClassName="active" >
-        Home
-      </NavLink>
-      <NavLink to="/posts" activeClassName="active">
-        Posts
-      </NavLink>
-    </nav>
-  </div>
-
-  <main>
-    <Route exact path="/" component={(props) => <Home {...props} name="Owls" />} />
-    <Route path="/posts" component={(props) => <Posts {...props} />} />
-  </main>
-</div>
-```
-
+  ```
+  
+</details
 
 Great, we can now hop over to the `Posts` page and view all of the posts.
 Awesome, someone's been very busy writing I see!
@@ -402,28 +405,30 @@ Add the following line in between the closing `<main>` tag and our `/posts` rout
 <Route path="/posts/:post_id" component={(props) => <Post {...props} />} />
 ```
 
-You should have the following:
+<details><summary>You should have the following in <code>App.js</code>:</summary>
 
-```js
-<div className="App">
-  <div className="links">
-    <nav>
-      <NavLink to="/" activeClassName="active" >
-        Home
-      </NavLink>
-      <NavLink to="/posts" activeClassName="active">
-        Posts
-      </NavLink>
-    </nav>
+  ```js
+  <div className="App">
+    <div className="links">
+      <nav>
+        <NavLink to="/" activeClassName="active" >
+          Home
+        </NavLink>
+        <NavLink to="/posts" activeClassName="active">
+          Posts
+        </NavLink>
+      </nav>
+    </div>
+
+    <main>
+      <Route exact path="/" component={(props) => <Home {...props} name="Owls" />} />
+      <Route path="/posts" component={(props) => <Posts {...props} />} />
+      <Route path="/posts/:post_id" component={(props) => <Post {...props} />} />
+    </main>
   </div>
+  ```
 
-  <main>
-    <Route exact path="/" component={(props) => <Home {...props} name="Owls" />} />
-    <Route path="/posts" component={(props) => <Posts {...props} />} />
-    <Route path="/posts/:post_id" component={(props) => <Post {...props} />} />
-  </main>
-</div>
-```
+</details>
 
 Welp theres that pesky `:post_id` thing again. Do you remember when I said "we'll make use of this in the near future"? Well, that time has arrived, let's see it in action!
 
@@ -440,7 +445,7 @@ The `:post_id` parameter is missing! Well, actually... it's not, remember when w
 
 But wait, why are we still seeing all of the posts? Something tells me we might need a `Switch`.
 
-
+___
 ### Implementing A `<Switch>` In Our Routes
 What exactly is a `<Switch>`? Well as the name suggests it works exactly like a light switch. It prevents routes that we don't need at the current time from loading. Why would I need that you ask, well let me show you:
 
@@ -470,6 +475,7 @@ Now jump into your developer console and look at your `React dev tools`:
 
 You'll notice that now React is only rendering one of our `Route` components at a time! Much better!
 
+___
 ### You Do: Add a Fourth Route
 
 > 10 minute exercise / 5 minute review
@@ -487,7 +493,7 @@ If you were curious enough to poke around the code base, you may have noticed a 
 
 Let's google `history.push` in React and discuss with your findings with your neighbor.
 
-
+___
 ## Recap
 With React Router, we're able to create navigation in our applications with special components and properties. Key concepts covered here include:
 - `<Switch />`
