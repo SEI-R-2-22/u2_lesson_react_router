@@ -64,20 +64,21 @@ Aliasing is when we import a package by a different name such as the above. Here
 
 By making `Router` the root component of our app, all child components, including `App` will have access to a `history` object through which information like the current location and url can be accessed or changed. Additionally, in order to use the other routing components provided by React Router, a `Router` ancestor component is necessary.
 
-Next, in `App.js`, we need to import all of the components we want to use in our app:
+Next, in `App.js`, we need to import all of the components we want to use in our app. We'll also need to import `NavLink` and `Route` components from `react-router-dom`:
 
 ```js
 // src/App.js
 import './App.css'
-import Home from './screens/Home'
-import Posts from './screens/Posts'
-import About from './screens/About'
-import Post from './screens/Post'
+import { Route, NavLink } from 'react-router-dom';
+import Home from './screens/Home';
+import Posts from './screens/Posts';
+import About from './screens/About';
+import Post from './screens/Post';
 ```
 
 ### Modifying App's `return` Statement
 
-Now that we have access to these components, we need to modify the `App` component's `return` statement to set up navigation. Think of `App.js` as an entry point for our application.
+Now that we have access to these components, we need to modify the `App` component's `return` statement to set up navigation. Think of `App.js` as an entry point for our application that will control the flow of URL routes and links.
 
 A common structure for using `react-router` in our `App.js` file is:
 
@@ -97,28 +98,18 @@ return (
 )
 ```
 
-We'll also be adding a wrapping container for our navigation like so:
-
-```js
-return (
-  <div className="App">
-    <div className="links">
-      <nav>// Code Goes Here</nav>
-    </div>
-    <main>
-      <Route path="" render={} />
-    </main>
-  </div>
-)
-```
+- Wrapping navigation links in a `<nav>` used as a wrapper. This allows us to have most major site links available in one accessible place.
+- Use a `<main>` tag to wrap all content that will be served up by our `<Route>`s. This way, a proper semantic tag can be used to control the layout of our application while the various components that will render within it.
 
 While `React Router` has many availble available properties and components, we'll be using only a few to build our apps.
 
-> **`Link`** - a component for setting the URL and providing navigation between different components in our app without triggering a page refresh. It takes a `to` property, which sets the URL to whatever path is defined within it. Link can also be used inside of any component that is connected to a `Route`.
+- **`Link`** - a component for setting the URL and providing navigation between different components in our app without triggering a page refresh. It takes a `to` property, which sets the URL to whatever path is defined within it. Link can also be used inside of any component that is connected to a `Route`.
 
-> **`NavLink`** - is a component that works the same as **`Link`**, except it makes more properties available to us for styling and detecting which page we're on.
+- **`NavLink`** - is a component that works the same as **`Link`**, except it makes more properties available to us for styling and detecting which page we're on.
 
-> **`Route`** - a component that connects a certain `path` in the URL with the relevant component to `render` at that location.
+- **`Route`** - a component that connects a certain `path` in the URL with the relevant component to `render` at that location.
+
+- **`Switch`** - a component used as a wrapper for `Route` components. The `Switch` component gives us control over which routes are currently being rendered.
 
 ### Route render methods
 
