@@ -241,9 +241,8 @@ export default class Home extends Component {
 }
 ```
 
-Make sure to start your React server by running `npm start` in the starter code directory.
-
-Head on over to your browser and open up your developer console. Open the console tab and let's see them props!
+- Make sure to start your React server by running `npm start` in the starter code directory.
+- Head on over to your browser and open up your developer console. Open the console tab and let's see them props!
 
 ```
 Object:
@@ -280,9 +279,8 @@ Object:
 
 Wowzers! That's a lot of props! And guess what, they all came from `React Router`. Neat!
 
-But wait, if you take a look at `Home.js` you'll see that we're looking for a `prop` called **`name`**. How do we get that over there??
-
-Well from what you know so far, we can pass `props` to components like this:
+- But wait, if you take a look at `Home.js` you'll see that we're looking for a `prop` called **`name`**. How do we get that over there??
+- Well from what you know so far, we can pass `props` to components like this:
 
 ```js
 <Home name="Owls" />
