@@ -17,14 +17,14 @@ React Router, while not the only, is the most commonly-used routing library for 
 ## Getting Started
 You've been provided with starter code and components. Do not modify any of the provided code besides `App.js`.
 - `Fork` and `clone` this repository.
-1. `cd` into the `starter-code` directory.
-2. Run `npm install` to install our necessary packages.
+- `cd` into the `starter-code` directory.
+- Run `npm install` to install our necessary packages.
 
 
 ## Instructions
 ### What is React Router?
 
-React Router is a third party library that makes it easy for us to route URLs - not to different pages, but by dynamically loading different components on the same page as the user navigates to different URLs. Once we define how the URLs are routed to the components, React Router will manage our Single Page Application (SPA) browser history automatically. SPAs are web apps which load different sections of a website within the same page. The user feels as though they've never left the homepage because links swap out content and replace it with new content.
+React Router makes it easy for us to route URLs - not to different pages, but by dynamically loading different components on the same page as the user navigates to different URLs. Once we define how the URLs are routed to the components, React Router will manage our Single Page Application (SPA) `browser history` automatically. SPAs are web apps which load different sections of a website within the same page. The user feels as though they've never left the homepage because links swap out content and replace it with new content.
 
 ### React Router Setup
 
@@ -56,9 +56,9 @@ Note that we are aliasing <code>BrowserRouter</code> as `Router` here for simpli
   What is Aliasing
 </summary>
 <br>
-<blockquote>
-    Aliasing is when we import a package by a different name such as the above. Here, instead of using <code>BrowserRouter</code> we "change" the name to <code>Router</code>. We can now use <code>Router</code> instead of a long name such as <code>BrowserRouter</code>.
- </blockquote>
+
+Aliasing is when we import a package by a different name such as the above. Here, instead of using <code>BrowserRouter</code> we "change" the name to <code>Router</code>. We can now use <code>Router</code> instead of a long name such as <code>BrowserRouter</code>.
+
 </details>
 <br>
 
@@ -77,19 +77,7 @@ import Post from './screens/Post'
 
 ### Modifying App's `return` Statement
 
-Now that we have access to these components, we need to modify the `App` component's `return` statement to set up navigation. Think of `App.js` as an entry point, it should not hold any type of data as it can actually hurt our apps performance. This is called `Global State`.
-
-<details closed>
-<summary>
-  What is <code>Global State</code>
-</summary>
-<br>
-<blockquote>
-    <code>Global State</code> is when we maintain a state at the top most level of our app, in this case <code>App.js</code>.
-    This can cause our app to slow down significantly because React monitors all information being passed along to our components, otherwise known as <code>props</code>. Think of global state as someone at a grocery store standing at the checkout register without all of their items. This person may have to run back out to get some more items, maybe eggs, maybe milk. Then come back to the register, only to remember that they forgot to get some bread! In this case, said person is holding up the line. The same thing happens when we keep too much information in <code>App.js</code>.
- </blockquote>
-</details>
-<br>
+Now that we have access to these components, we need to modify the `App` component's `return` statement to set up navigation. Think of `App.js` as an entry point for our application.
 
 A common structure for using `react-router` in our `App.js` file is:
 
