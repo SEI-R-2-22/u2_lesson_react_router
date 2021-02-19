@@ -188,12 +188,12 @@ To prove some of these concepts, let's link our `App.js` to one of our component
 import { Route, NavLink } from 'react-router-dom'
 ```
 
-- Then add that `Route` between our `<main></main>` tags.
+- Then add a `<Route />` between our `<main></main>` tags that will render our `<Home />` component with the `component` property.
 
 ```js
 <div className="App">
   <div className="links">
-    <nav>// Code Goes Here</nav>
+    <nav>{/* Code Goes Here */}</nav>
   </div>
   <main>
     <Route exact path="/" component={(props) => <Home {...props} />} />
@@ -201,7 +201,7 @@ import { Route, NavLink } from 'react-router-dom'
 </div>
 ```
 
-Great! Now head over to the `screens` folder and into `Home.js`
+- Great! Now head over to the `screens` folder and into `Home.js`
 and add in a `console.log` **before the `return` statement**:
 
 ```js
