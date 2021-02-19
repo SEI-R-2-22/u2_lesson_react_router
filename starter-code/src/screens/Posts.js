@@ -18,7 +18,7 @@ export default class Posts extends Component {
     return (
       <div className="posts">
         {this.state.posts.map((post) => (
-          <PostCard
+          <PostCard key={post.id}
             id={post.id}
             title={post.title}
             image={post.image}
