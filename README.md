@@ -129,20 +129,28 @@ You'll notice, in the first example we used `render` in our Route; however, this
 
 #### `<Route render={} />`
 
-The render method uses inline rendering which means that the rendered content doesn't need to unmount or remount. You pass in a function to be called when the location matches rather than creating a `React.createElement`.
+The render method uses inline rendering which means that the rendered content doesn't need to unmount or remount. You pass in a function to be called when the [`location`](https://reacttraining.com/react-router/web/api/location) matches rather than creating a `React.createElement`.
 
 ```js
 // convenient inline rendering
 <Route path="/home" render={() => <div>Home</div>}/>
-<Route path="/find-puppy" render={(props) => (
-             <SearchPuppies {...props}
-               formQuery={this.state.formQuery}
-               handleChange={this.handleChange}
-               handleSubmit={this.handleSubmit}
-             />
-           )}
+<Route path="/find-puppy" 
+  render={(props) => (
+    <SearchPuppies {...props}
+     formQuery={this.state.formQuery}
+     handleChange={this.handleChange}
+     handleSubmit={this.handleSubmit}
+    />
+  )}
 />
 ```
+
+- Notice how we're accessing props inside the `render`
+- We use an anonymous function `() =>` to access all props, including those provided by `react-router-dom`
+```js 
+render={(props) => <SomeComponent { ...props } />
+```
+
 
 #### `<Route component={} />`
 
