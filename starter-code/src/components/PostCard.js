@@ -1,15 +1,16 @@
-import React from 'react'
+import React, {Component} from 'react'
 
-const PostCard = (props) => {
-  return (
-    <div className="item" key={props.id}>
-      <img src={props.image} alt="Post banner" />
-      <div className="modal">
-        <h3>{props.title}</h3>
-        <button>Read More</button>
+export default class PostCard extends Component {
+  render() {
+    return (
+      <div className="item" key={props.id}>
+        <img src={props.image} alt="Post banner" />
+        <div className="modal">
+          <h3>{props.title}</h3>
+          <button>Read More</button>
+        </div>
       </div>
-    </div>
-  )
+    );
+  }
 }
 
-export default PostCard
