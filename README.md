@@ -64,7 +64,7 @@ Aliasing is when we import a package by a different name such as the above. Here
 
 By making `Router` the root component of our app, all child components, including `App` will have access to a `history` object through which information like the current location and url can be accessed or changed. Additionally, in order to use the other routing components provided by React Router, a `Router` ancestor component is necessary.
 
-Next, in `App.js`, we need to import all of the components we want to use in our app. We'll also need to import `NavLink` and `Route` components from `react-router-dom`:
+Next, in `App.js`, we need to import all of the components we want to use in our app. We'll also need to import `NavLink` and `Route` components from `react-router-dom`, since we'll be using them later on:
 
 ```js
 // src/App.js
@@ -158,7 +158,7 @@ ___
 Renders a component only when the requested location matches the path location. It renders with only the route props (`location`, `match`, and `history`) if no callback is provided.
 
 ```js
-<Route path="/puppies/:puppyName" component={DisplayPuppy} />;
+<Route path="/puppies/:puppyName" component={(props) => <DisplayPuppy { ...props } />} />;
 
 //The above would render the following component
 class DisplayPuppy extends class Component {
@@ -171,23 +171,24 @@ class DisplayPuppy extends class Component {
 In this case, the `DisplayPuppy` component will recieve the `match`, `location`, and `history` props.
 
 Looking deeper, the docs for the `component` method show us a little more about what is going on under the hood.
+- When you use component (instead of `render` or `children`) the router uses `React.createElement` to create a new React element from the given component. 
+- That means if you provide an inline function to the component prop, you would create a new component every render. T
+- his results in the existing component unmounting and the new component mounting instead of just updating the existing component."
+- To note: `<Route component>` takes precedence over `<Route render>` and both take precedence over `<Route children>` so don’t use more than one in the same `<Route>`.
 
-"When you use component (instead of `render` or `children`) the router uses `React.createElement` to create a new React element from the given component. That means if you provide an inline function to the component prop, you would create a new component every render. This results in the existing component unmounting and the new component mounting instead of just updating the existing component."
+All of these components have access to all the same route props (`location`, `match`, and `history`) as the other `Route` components. You can also explicitly pass other props (like functions and variables in the `state` object of `App.js`) that would not exist in `props` into the components like you would typically pass them as props.
 
-To note: `<Route component>` takes precedence over `<Route render>` and both take precedence over `<Route children>` so don’t use more than one in the same `<Route>`.
-
-All of these components have access to all the same route props (`location`, `match`, and `history`) as the other `Route` components; however, you can explicitly pass other props (like functions and variables in the `state` object of `App.js`) as arguments through to a component using the `render={}` `prop`.
-
+___
 ### Putting It All Into Practice
 
 To prove some of these concepts, let's link our `App.js` to one of our components.
-First let's import `Route` from `react-router-dom` like this:
+- First let's make sure we've imported `Route` and `NavLink` from `react-router-dom` with destructuring like this:
 
 ```js
-import { Route } from 'react-router-dom'
+import { Route, NavLink } from 'react-router-dom'
 ```
 
-Then add that `Route` between our `<main></main>` tags.
+- Then add that `Route` between our `<main></main>` tags.
 
 ```js
 <div className="App">
@@ -195,7 +196,7 @@ Then add that `Route` between our `<main></main>` tags.
     <nav>// Code Goes Here</nav>
   </div>
   <main>
-    <Route exact path="/" component={Home} />
+    <Route exact path="/" component={(props) => <Home {...props} />} />
   </main>
 </div>
 ```
