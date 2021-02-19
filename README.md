@@ -202,33 +202,39 @@ Great! Now head over to the `screens` folder and into `Home.js`
 and add in a `console.log` **before the `return` statement**:
 
 ```js
-const Home = props => {
-  console.log(props)
-  return (
-    <div className="home">
-      <div>
-        <h1>
-          Welcome to {props.name || <strong>Insert Name Here</strong>}s Blog
-        </h1>
-      </div>
-      <section className="flip-card">
-        <div className="inner">
-          <div className="front">
-            <img
-              src="https://images.unsplash.com/photo-1536060316316-2466bda904f1?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2000&q=80"
-              alt="You got this"
-            />
-          </div>
-          <div className="back">
-            <img
-              src="https://images.unsplash.com/photo-1504805572947-34fad45aed93?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60"
-              alt=" Work Hard"
-            />
-          </div>
+import React, {Component} from 'react';
+
+export default class Home extends Component {
+  render() {
+
+    console.log(this.props)
+
+    return (
+      <div className="home">
+        <div>
+          <h1>
+            Welcome to {this.props.name || <strong>Insert Name Here</strong>}s Blog
+          </h1>
         </div>
-      </section>
-    </div>
-  )
+        <section className="flip-card">
+          <div className="inner">
+            <div className="front">
+              <img
+                src="https://images.unsplash.com/photo-1536060316316-2466bda904f1?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2000&q=80"
+                alt="You got this"
+              />
+            </div>
+            <div className="back">
+              <img
+                src="https://images.unsplash.com/photo-1504805572947-34fad45aed93?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60"
+                alt=" Work Hard"
+              />
+            </div>
+          </div>
+        </section>
+      </div>
+    );
+  }
 }
 ```
 
@@ -276,7 +282,7 @@ But wait, if you take a look at `Home.js` you'll see that we're looking for a `p
 Well from what you know so far, we can pass `props` to components like this:
 
 ```js
-<Component name="Owls" />
+<Home name="Owls" />
 ```
 
 But, if we were to try that with our routes:
@@ -288,6 +294,8 @@ But, if we were to try that with our routes:
 You'll get a nice big red error message.
 
 To pass `props` to a component we would need to do the following:
+- Wrap the component in an anonymous function `() =>`
+- Write the component like we would be rendering it in JSX inside the anonymous function
 
 ```js
 <Route exact path="/" component={() => <Home name="Owls" />} />
@@ -305,7 +313,9 @@ We can do that by writing the following:
 
 Wait what.....
 
-What we did here was pretty much tell `React Router`, "Hey um we need your props, would you mind handing them over?" When putting `props` inside of our callback function, we are telling `React Router` to send over it's props, then we make use of the `spread` operator(`...`) to say, take all of the props from `React Router` and send them down to our component. Now if you check your console's you'll notice that all of the `props` we have before are now available to us!
+What we did here was pretty much tell `React Router`, "Hey um we need your props, would you mind handing them over?" 
+
+When putting `props` inside of our callback function, we are telling `React Router` to send over it's props, then we make use of the `spread` operator(`...`) to say, take all of the props from `React Router` and send them down to our component. Now if you check your console's you'll notice that all of the `props` we have before are now available to us!
 
 So now what is a `<Route/>` Component...
 
@@ -315,12 +325,16 @@ Let's stop here and take a look at the following code:
 <Route path="/puppies/:puppyName" component={DisplayPuppy} />;
 
 //The above would render the following component
-DisplayPuppy(props) {
-  return <h1>Awww {props.match.params.puppyName} is such a good pup!</h1>;
+export default class DisplayPuppy extends Component {
+  render() {
+    return <h1>Awww {this.props.match.params.puppyName} is such a good pup!</h1>;
+  }
 }
 ```
 
-I'll bet you're wondering what in the world is this `:puppyname`. This my friends is called a **`url parameter`**. Think of it as a placeholder for some sort of data that we can place there later on. Say for example I'm looking at pets on a website and I see this really cute puppy. I click on it and it takes me to that specific puppies page. Well now, how did we really do that, what is this hokus pokus stuff.
+I'll bet you're wondering what in the world is this `:puppyname`. This my friends is called a **`url parameter`**. 
+
+Think of it as a placeholder for some sort of data that we can place there later on. Say for example I'm looking at pets on a website and I see this really cute puppy. I click on it and it takes me to that specific puppies page. Well now, how did we really do that, what is this hokus pokus stuff.
 
 Whenever you display some sort of data, you'll usually have access to it's specific unique `id` or `name`. We can use one or both to look through our data and find that specific puppy!
 
@@ -463,7 +477,7 @@ I'm gonna get all the floofy dogs!
 
 What exactly is a `<Switch>`? Well as the name suggests it works exactly like a light switch. It prevents routes that we don't need at the current time from loading. Why would I need that you ask, well let me show you:
 
-<img src='https://sei-nyc-owls.s3.amazonaws.com/react-router-no-switch.png'>
+<img height="400" src='https://i1.wp.com/storage.googleapis.com/blog-images-backup/1*paiSxiVwaPH4McITwinmrg.gif?ssl=1'>
 
 If you notice, theres multiple `Route`'s being rendered, well that's that not really ideal. All of these components are all rendering at the same time. The only thing is, you can't physically see them. They are kind of like a stack of papers on a desk, you can see whats on the top paper, but not the ones underneath. Say for example these components were handling quite a bit of data and logic, we would start running into performance issues due to all of the code being loaded at the same time. Our browsers would start hogging up all of our computer memory until it becomes unuseable. I don't know about you but, that doesn't sound like a good thing.
 
@@ -486,7 +500,6 @@ and wrap it around our `Route` components:
 
 Now jump into your developer console and look at your `React dev tools`:
 
-<img src='https://sei-nyc-owls.s3.amazonaws.com/react-router-switch.png'>
 
 You'll notice that now React is only rendering one of our `Route` components at a time! Much better!
 
@@ -502,10 +515,10 @@ Experiment with passing various `props` through to the `<About/>` component.
 If you were curious enough to poke around the code base, you may have noticed a bit of code that looks like this:
 
 ```js
-<button onClick={() => props.history.push(`/posts/${props.id}`)}>
+<button onClick={() => this.props.history.push(`/posts/${this.props.id}`)}>
 ```
 
-Let's google `history.push` and discuss with your findings with your neighbor.
+Let's google `history.push` in React and discuss with your findings with your neighbor.
 
 
 ## Recap
