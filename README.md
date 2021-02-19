@@ -127,6 +127,7 @@ You'll notice, in the first example we used `render` in our Route; however, this
 ```
 -  All three route render methods will be passed [`match`](https://reacttraining.com/react-router/web/api/match), [`location`](https://reacttraining.com/react-router/web/api/location), and [`history`](https://reacttraining.com/react-router/web/api/history) props. We won't be covering `<Route children>` for the scope of this class.
 
+___
 #### `<Route render={} />`
 
 The render method uses inline rendering which means that the rendered content doesn't need to unmount or remount. You pass in a function to be called when the [`location`](https://reacttraining.com/react-router/web/api/location) matches rather than creating a `React.createElement`.
@@ -151,7 +152,7 @@ The render method uses inline rendering which means that the rendered content do
 render={(props) => <SomeComponent { ...props } />
 ```
 
-
+___
 #### `<Route component={} />`
 
 Renders a component only when the requested location matches the path location. It renders with only the route props (`location`, `match`, and `history`) if no callback is provided.
@@ -160,8 +161,10 @@ Renders a component only when the requested location matches the path location. 
 <Route path="/puppies/:puppyName" component={DisplayPuppy} />;
 
 //The above would render the following component
-DisplayPuppy(props) {
-  return <h1>Awww {props.match.params.puppyName} is such a good pup!</h1>;
+class DisplayPuppy extends class Component {
+  render() {
+    return <h1>Awww {this.props.match.params.puppyName} is such a good pup!</h1>;
+  }
 }
 ```
 
