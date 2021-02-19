@@ -1,38 +1,32 @@
-# ![](https://ga-dash.s3.amazonaws.com/production/assets/logo-9f88ae6c9c3871690e33280fcf557f33.png) SOFTWARE ENGINEERING IMMERSIVE
+# React Router
 
 ![](react-router.png)
 
-For this lesson, students should:
-
-- understand react components
-- understand react state and props
-
-## Learning Objectives
-
-- Learn about routing with react
-- Use React Router to map URLs to components
-- Use React Router to create links to different pages
-
-## Framing
+## Overview
 
 Up to this point, our React applications have been limited in size, allowing us to use basic control flow in our components' render methods to determine what gets rendered to our users. However, as our React applications grow in size and scope, we need an easier and more robust way of rendering different components. Additionally, we will want the ability to set information in the url parameters to make it easier for users to identify where they are in the application.
 
 React Router, while not the only, is the most commonly-used routing library for React. It is relatively straightforward to configure and integrates with the component architecture nicely (itself being nothing but a collection of components). Once configured, it essentially serves as the root component in a React application and renders other application components within itself depending on the path in the url.
 
-## Preparation
 
+## Lesson Objectives
+- Learn about routing with react
+- Use React Router to map URLs to components
+- Use React Router to create links to different pages
+
+## Getting Started
 You've been provided with starter code and components. Do not modify any of the provided code besides `App.js`.
-
+- `Fork` and `clone` this repository.
 1. `cd` into the `starter-code` directory.
 2. Run `npm install` to install our necessary packages.
 
-## What is React Router?
+
+## Instructions
+### What is React Router?
 
 React Router is a third party library that makes it easy for us to route URLs - not to different pages, but by dynamically loading different components on the same page as the user navigates to different URLs. Once we define how the URLs are routed to the components, React Router will manage our Single Page Application (SPA) browser history automatically. SPAs are web apps which load different sections of a website within the same page. The user feels as though they've never left the homepage because links swap out content and replace it with new content.
 
-## React Router Setup
-
-### Importing Dependencies
+### React Router Setup
 
 First, we need to install `react-router-dom` and save it as a dependency to `package.json`.
 
@@ -138,7 +132,7 @@ While `React Router` has many availble available properties and components, we'l
 
 > **`Route`** - a component that connects a certain `path` in the URL with the relevant component to `render` at that location.
 
-## Route render methods
+### Route render methods
 
 You'll notice, in the first example we used `render` in our Route; however, this is not the only prop that the `Route` component can use to render content. This is because there are three ways to render something using a `<Route>`: `<Route component>`, `<Route render>`, and `<Route children>`. All three route render methods will be passed [`match`](https://reacttraining.com/react-router/web/api/match), [`location`](https://reacttraining.com/react-router/web/api/location), and [`history`](https://reacttraining.com/react-router/web/api/history) props. We won't be covering `<Route children>` for the scope of this class.
 
@@ -182,7 +176,7 @@ To note: `<Route component>` takes precedence over `<Route render>` and both tak
 
 All of these components have access to all the same route props (`location`, `match`, and `history`) as the other `Route` components; however, you can explicitly pass other props (like functions and variables in the `state` object of `App.js`) as arguments through to a component using the `render={}` `prop`.
 
-## Putting It All Into Practice
+### Putting It All Into Practice
 
 To prove some of these concepts, let's link our `App.js` to one of our components.
 First let's import `Route` from `react-router-dom` like this:
@@ -465,9 +459,9 @@ What exactly is `exact`?
 I'm gonna get all the floofy dogs!
 (Sorry cat lovers...)
 
-## Implementing A `<Switch>` In Our Routes
+### Implementing A `<Switch>` In Our Routes
 
-What exactly is a `switch`, well as the name suggests it works exactly like a light switch. It prevents routes that we don't need at the current time from loading. Why would I need that you ask, well let me show you:
+What exactly is a `<Switch>`? Well as the name suggests it works exactly like a light switch. It prevents routes that we don't need at the current time from loading. Why would I need that you ask, well let me show you:
 
 <img src='https://sei-nyc-owls.s3.amazonaws.com/react-router-no-switch.png'>
 
@@ -496,14 +490,14 @@ Now jump into your developer console and look at your `React dev tools`:
 
 You'll notice that now React is only rendering one of our `Route` components at a time! Much better!
 
-## You Do: Add a Fourth Route
+### You Do: Add a Fourth Route
 
 > 10 minute exercise / 5 minute review
 
 Add in the `<About>` component and a `<Navlink>` for that page. Think about what your url path should be!
 Experiment with passing various `props` through to the `<About/>` component.
 
-## Turn and Talk (5 min)
+### Turn and Talk 
 
 If you were curious enough to poke around the code base, you may have noticed a bit of code that looks like this:
 
@@ -513,9 +507,11 @@ If you were curious enough to poke around the code base, you may have noticed a 
 
 Let's google `history.push` and discuss with your findings with your neighbor.
 
-## Resources
 
-- React Training / React Router [Quick Start](https://reacttraining.com/react-router/web/guides/quick-start)
-- React Training / React Router [Basic Components](https://reacttraining.com/react-router/web/guides/basic-components)
-- React Training / React Router [Basic Example](https://reacttraining.com/react-router/web/example/basic)
-- React Training / React Router [URL Parameters](https://reacttraining.com/react-router/web/example/url-params)
+## Recap
+
+## Resources
+- [React Router Quick Start](https://reacttraining.com/react-router/web/guides/quick-start)
+- [React Router Basic Components](https://reacttraining.com/react-router/web/guides/basic-components)
+- [React Router Basic Example](https://reacttraining.com/react-router/web/example/basic)
+- [React Router URL Parameters](https://reacttraining.com/react-router/web/example/url-params)
