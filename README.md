@@ -146,8 +146,11 @@ The render method uses inline rendering which means that the rendered content do
 />
 ```
 
-- Notice how we're accessing props inside the `render`
-- We use an anonymous function `() =>` to access all props, including those provided by `react-router-dom`
+- Notice how we're accessing props inside the `render` of our `<Route />`
+- We use an anonymous callback function `() =>` to access all props, including those provided by `react-router-dom`
+
+When putting `props` inside of our callback function, we are telling `React Router` to send over it's props, then we make use of the `spread` operator(`...`) to take all of the props from `React Router` and send them down to our component. 
+
 ```js 
 render={(props) => <SomeComponent { ...props } />
 ```
@@ -243,6 +246,7 @@ export default class Home extends Component {
 
 - Make sure to start your React server by running `npm start` in the starter code directory.
 - Head on over to your browser and open up your developer console. Open the console tab and let's see them props!
+-  Try clicking on each key for`history`, `location`, and `match`
 
 ```
 Object:
@@ -278,52 +282,27 @@ Object:
 ```
 
 Wowzers! That's a lot of props! And guess what, they all came from `React Router`. Neat!
-
 - But wait, if you take a look at `Home.js` you'll see that we're looking for a `prop` called **`name`**. How do we get that over there??
-- Well from what you know so far, we can pass `props` to components like this:
 
-```js
-<Home name="Owls" />
-```
-
-But, if we were to try that with our routes:
-
-```js
-<Route exact path="/" component={Home name='Owls'} />
-```
-
-You'll get a nice big red error message.
-
-To pass `props` to a component we would need to do the following:
+To pass additional `props` to a component we would need to do the following:
 - Wrap the component in an anonymous function `() =>`
 - Write the component like we would be rendering it in JSX inside the anonymous function
+- Add in the props that we'll need. In this case, we'll add the `name` prop and give it a value of "Owls"
 
 ```js
-<Route exact path="/" component={() => <Home name="Owls" />} />
+<Route exact path="/" component={(props) => <Home { ...props } name="Owls" />} />
 ```
 
 Now our homepage should be displaying any name you entered as a prop.
 
-But let's take a look at your console. You'll notice that we don't have all of the `props` available to us before. That's because we need to explicitly tell `React Router` that we need it's `props`.
 
-We can do that by writing the following:
-
-```js
-<Route exact path="/" component={props => <Home {...props} name="Owls" />} />
-```
-
-Wait what.....
-
-What we did here was pretty much tell `React Router`, "Hey um we need your props, would you mind handing them over?" 
-
-When putting `props` inside of our callback function, we are telling `React Router` to send over it's props, then we make use of the `spread` operator(`...`) to say, take all of the props from `React Router` and send them down to our component. Now if you check your console's you'll notice that all of the `props` we have before are now available to us!
-
+### Links and Params
 So now what is a `<Route/>` Component...
 
 Let's stop here and take a look at the following code:
 
 ```js
-<Route path="/puppies/:puppyName" component={DisplayPuppy} />;
+<Route path="/puppies/:puppyName" component={(props) => <DisplayPuppy {...props} />} />;
 
 //The above would render the following component
 export default class DisplayPuppy extends Component {
@@ -333,58 +312,47 @@ export default class DisplayPuppy extends Component {
 }
 ```
 
-I'll bet you're wondering what in the world is this `:puppyname`. This my friends is called a **`url parameter`**. 
+I'll bet you're wondering what in the world is this `:puppyName`. Why is there a colon `:` in front of it? This my friends is called a **`url parameter`**. 
 
-Think of it as a placeholder for some sort of data that we can place there later on. Say for example I'm looking at pets on a website and I see this really cute puppy. I click on it and it takes me to that specific puppies page. Well now, how did we really do that, what is this hokus pokus stuff.
+Think of it as a placeholder for some sort of data that we can place there later on. Say for example I'm looking at pets on a website and I see this really cute puppy. I click on it and it takes me to that specific puppies page. Well now, how did we really do that, what is this hokus pokus stuff?
 
-Whenever you display some sort of data, you'll usually have access to it's specific unique `id` or `name`. We can use one or both to look through our data and find that specific puppy!
-
-We'll be making of use of this in the near future.
+- Whenever you display some sort of data, you'll usually have access to it's specific unique `id` or `name`. 
+- We can use one or both to look through our data and find that specific puppy!
+- We'll be making of use of this in the near future.
 
 First let's get our navigation links set up, we'll be doing this using the `<NavLink>` component.
-Import it from `React Router` like so:
-
-> Note: We are using destructuring to pull these components from `React Router`!
-
-```js
-import { NavLink, Route } from 'react-router-dom'
-```
-
-Then add in the following code:
+- Make sure you have `NavLink` imported from `react-router-dom` in `App.js`
+- Then add in the following code:
 
 ```js
 <nav>
-  <NavLink exact activeClassName="active" to="/">
+  <NavLink to="/" activeClassName="active" >
     Home
   </NavLink>
-  <NavLink exact to="/posts" activeClassName="active">
+  <NavLink to="/posts" activeClassName="active">
     Posts
   </NavLink>
 </nav>
 ```
 
-Your `App.js` should look like the following:
+Your `App.js` return should look like the following:
 
 ```js
 return (
   <div className="App">
     <div className="links">
       <nav>
-        <NavLink exact activeClassName="active" to="/">
+        <NavLink to="/" activeClassName="active" >
           Home
         </NavLink>
-        <NavLink exact to="/posts" activeClassName="active">
+        <NavLink to="/posts" activeClassName="active">
           Posts
         </NavLink>
       </nav>
     </div>
 
     <main>
-      <Route
-        exact
-        path="/"
-        component={props => <Home {...props} name="Owls" />}
-      />
+      <Route exact path="/" component={props => <Home {...props} name="Owls" />} />
     </main>
   </div>
 )
@@ -393,7 +361,7 @@ return (
 First let's display all of the posts on our blog and our home page. Add in the following line between the two `<main></main>` tags and after our first `<Route>`:
 
 ```js
-<Route exact path="/posts" component={Posts} />
+<Route path="/posts" component={(props) => <Posts {...props} />} />
 ```
 
 You should now have the following:
@@ -402,18 +370,18 @@ You should now have the following:
 <div className="App">
   <div className="links">
     <nav>
-      <NavLink exact activeClassName="active" to="/">
+      <NavLink to="/" activeClassName="active" >
         Home
       </NavLink>
-      <NavLink exact to="/posts" activeClassName="active">
+      <NavLink to="/posts" activeClassName="active">
         Posts
       </NavLink>
     </nav>
   </div>
 
   <main>
-    <Route exact path="/" component={() => <Home name="Owls" />} />
-    <Route exact path="/posts" component={Posts} />
+    <Route exact path="/" component={(props) => <Home {...props} name="Owls" />} />
+    <Route path="/posts" component={(props) => <Posts {...props} />} />
   </main>
 </div>
 ```
@@ -425,7 +393,7 @@ Now let's actually set up our router so that we can view a specific post:
 Add the following line in between the closing `<main>` tag and our `/posts` route.
 
 ```js
-<Route exact path="/posts/:post_id" component={Post} />
+<Route path="/posts/:post_id" component={(props) => <Post {...props} />} />
 ```
 
 You should have the following:
@@ -434,19 +402,19 @@ You should have the following:
 <div className="App">
   <div className="links">
     <nav>
-      <NavLink exact activeStyle={activeStyles} to="/">
+      <NavLink to="/" activeClassName="active" >
         Home
       </NavLink>
-      <NavLink exact to="/posts" activeStyle={activeStyles}>
+      <NavLink to="/posts" activeClassName="active">
         Posts
       </NavLink>
     </nav>
   </div>
 
   <main>
-    <Route exact path="/" component={() => <Home name="Owls" />} />
-    <Route exact path="/posts" component={Posts} />
-    <Route exact path="/posts/:post_id" component={Post} />
+    <Route exact path="/" component={(props) => <Home {...props} name="Owls" />} />
+    <Route path="/posts" component={(props) => <Posts {...props} />} />
+    <Route path="/posts/:post_id" component={(props) => <Post {...props} />} />
   </main>
 </div>
 ```
