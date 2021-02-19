@@ -488,10 +488,8 @@ Experiment with passing various `props` through to the `<About/>` component.
 If you were curious enough to poke around the code base, you may have noticed a bit of code that looks like this:
 
 ```js
-<button onClick={() => this.props.history.push(`/posts/${this.props.id}`)}>
+ <Link to={`/posts/${this.props.id}`}>
 ```
-
-Let's google `history.push` in React and discuss with your findings with your neighbor.
 
 ___
 ## Recap
