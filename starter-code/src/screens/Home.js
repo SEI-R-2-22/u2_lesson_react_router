@@ -6,7 +6,7 @@ export default class Home extends Component {
       <div className="home">
         <div>
           <h1>
-            Welcome to {props.name || <strong>Insert Name Here</strong>}'s Blog
+            Welcome to {this.props.name || <strong>Insert Name Here</strong>}'s Blog
           </h1>
         </div>
         <section className="flip-card">
