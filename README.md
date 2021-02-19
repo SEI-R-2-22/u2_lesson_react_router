@@ -358,6 +358,11 @@ return (
 )
 ```
 
+So you may have noticed that we've been using something called `exact` when writing our routes.
+- What exactly is `exact`?
+- `Exact` is a way for us to tell `React Router` that we want an **exact** match in our urls.
+- Typically, you'll only use `exact` to render a homepage component when you application loads
+
 First let's display all of the posts on our blog and our home page. Add in the following line between the two `<main></main>` tags and after our first `<Route>`:
 
 ```js
@@ -385,6 +390,7 @@ You should now have the following:
   </main>
 </div>
 ```
+
 
 Great, we can now hop over to the `Posts` page and view all of the posts.
 Awesome, someone's been very busy writing I see!
@@ -430,20 +436,10 @@ Now it looks a little something like this: `http://localhost:3000/posts/3`.
 
 The `:post_id` parameter is missing! Well, actually... it's not, remember when we mentioned that it was just a placeholder, well that's exactly what it is. A placeholder until we send a specific data point to navigate to. Now that we selected our data point `React Router` goes, "Oh so you want that specific item? No problem, I got you!" and badabing badaboom theres our specific blog post!
 
-So you may have noticed that we've been using something called `exact` when writing our routes.
-What exactly is `exact`?
+But wait, why are we still seeing all of the posts? Something tells me we might need a `Switch`.
 
-`Exact` is a way for us to tell `React Router` that we want an **exact** match in our urls. So if I tell `React Router`, I want:
-
-```js
-<Route exact path='/all-dogs' component={AllDogs}>
-```
-
-I'm gonna get all the floofy dogs!
-(Sorry cat lovers...)
 
 ### Implementing A `<Switch>` In Our Routes
-
 What exactly is a `<Switch>`? Well as the name suggests it works exactly like a light switch. It prevents routes that we don't need at the current time from loading. Why would I need that you ask, well let me show you:
 
 <img height="400" src='https://i1.wp.com/storage.googleapis.com/blog-images-backup/1*paiSxiVwaPH4McITwinmrg.gif?ssl=1'>
@@ -461,9 +457,9 @@ and wrap it around our `Route` components:
 
 ```js
 <Switch>
-  <Route exact path="/" component={() => <Home name="Owls" />} />
-  <Route exact path="/posts" component={Posts} />
-  <Route exact path="/posts/:post_id" component={Post} />
+    <Route exact path="/" component={(props) => <Home {...props} name="Owls" />} />
+    <Route path="/posts" component={(props) => <Posts {...props} />} />
+    <Route path="/posts/:post_id" component={(props) => <Post {...props} />} />
 </Switch>
 ```
 
@@ -491,6 +487,13 @@ Let's google `history.push` in React and discuss with your findings with your ne
 
 
 ## Recap
+With React Router, we're able to create navigation in our applications with special components and properties. Key concepts covered here include:
+- `<Switch />`
+- `<Route />`
+- `<NavLink />`
+- `<Link />`
+- `render`
+- `component`
 
 ## Resources
 - [React Router Quick Start](https://reacttraining.com/react-router/web/guides/quick-start)
