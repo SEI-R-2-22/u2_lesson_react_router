@@ -175,8 +175,8 @@ In this case, the `DisplayPuppy` component will recieve the `match`, `location`,
 
 Looking deeper, the docs for the `component` method show us a little more about what is going on under the hood.
 - When you use component (instead of `render` or `children`) the router uses `React.createElement` to create a new React element from the given component. 
-- That means if you provide an inline function to the component prop, you would create a new component every render. T
-- his results in the existing component unmounting and the new component mounting instead of just updating the existing component."
+- That means if you provide an inline function to the component prop, you would create a new component every render. 
+- This results in the existing component unmounting and the new component mounting instead of just updating the existing component."
 - To note: `<Route component>` takes precedence over `<Route render>` and both take precedence over `<Route children>` so don’t use more than one in the same `<Route>`.
 
 All of these components have access to all the same route props (`location`, `match`, and `history`) as the other `Route` components. You can also explicitly pass other props (like functions and variables in the `state` object of `App.js`) that would not exist in `props` into the components like you would typically pass them as props.
@@ -446,16 +446,16 @@ What exactly is a `<Switch>`? Well as the name suggests it works exactly like a 
 
 <img height="400" src='https://i1.wp.com/storage.googleapis.com/blog-images-backup/1*paiSxiVwaPH4McITwinmrg.gif?ssl=1'>
 
-If you notice, theres multiple `Route`'s being rendered, well that's that not really ideal. All of these components are all rendering at the same time. The only thing is, you can't physically see them. They are kind of like a stack of papers on a desk, you can see whats on the top paper, but not the ones underneath. Say for example these components were handling quite a bit of data and logic, we would start running into performance issues due to all of the code being loaded at the same time. Our browsers would start hogging up all of our computer memory until it becomes unuseable. I don't know about you but, that doesn't sound like a good thing.
+If you notice, there are multiple `Route`'s being rendered, which isn't ideal. All of these components are all rendering at the same time. The only thing is, you can't physically see them. They are kind of like a stack of papers on a desk, you can see whats on the top paper, but not the ones underneath. Say for example these components were handling quite a bit of data and logic, we would start running into performance issues due to all of the code being loaded at the same time. Our browsers would start hogging up all of our computer memory until it becomes unuseable. I don't know about you but, that doesn't sound like a good thing.
 
 We can fix it using the `<Switch>` component which also comes with `React Router`!
-Let's import our `<Switch>`:
+Let's import our `<Switch>` in `App.js`:
 
 ```js
 import { NavLink, Route, Switch } from 'react-router-dom'
 ```
 
-and wrap it around our `Route` components:
+and wrap it around our `<Route>` components:
 
 ```js
 <Switch>
