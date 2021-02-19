@@ -76,6 +76,7 @@ import About from './screens/About';
 import Post from './screens/Post';
 ```
 
+___
 ### Modifying App's `return` Statement
 
 Now that we have access to these components, we need to modify the `App` component's `return` statement to set up navigation. Think of `App.js` as an entry point for our application that will control the flow of URL routes and links.
@@ -111,11 +112,22 @@ While `React Router` has many availble available properties and components, we'l
 
 - **`Switch`** - a component used as a wrapper for `Route` components. The `Switch` component gives us control over which routes are currently being rendered.
 
+
+___
 ### Route render methods
 
-You'll notice, in the first example we used `render` in our Route; however, this is not the only prop that the `Route` component can use to render content. This is because there are three ways to render something using a `<Route>`: `<Route component>`, `<Route render>`, and `<Route children>`. All three route render methods will be passed [`match`](https://reacttraining.com/react-router/web/api/match), [`location`](https://reacttraining.com/react-router/web/api/location), and [`history`](https://reacttraining.com/react-router/web/api/history) props. We won't be covering `<Route children>` for the scope of this class.
+You'll notice, in the first example we used `render` in our Route; however, this is not the only prop that the `Route` component can use to render content. This is because there are three ways to render something using a `<Route>`:
+```jsx
+// component
+<Route component={} />
+// render
+<Route render={} />
+// children
+<Route children={} />
+```
+-  All three route render methods will be passed [`match`](https://reacttraining.com/react-router/web/api/match), [`location`](https://reacttraining.com/react-router/web/api/location), and [`history`](https://reacttraining.com/react-router/web/api/history) props. We won't be covering `<Route children>` for the scope of this class.
 
-### `<Route render>`
+#### `<Route render={} />`
 
 The render method uses inline rendering which means that the rendered content doesn't need to unmount or remount. You pass in a function to be called when the location matches rather than creating a `React.createElement`.
 
@@ -132,7 +144,7 @@ The render method uses inline rendering which means that the rendered content do
 />
 ```
 
-### `<Route component>`
+#### `<Route component={} />`
 
 Renders a component only when the requested location matches the path location. It renders with only the route props (`location`, `match`, and `history`) if no callback is provided.
 
