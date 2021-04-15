@@ -50,7 +50,7 @@ ReactDOM.render(
 
 By making `BrowserRouter` the root component of our app, all child components, including `App` will have access to a `history` object through which information like the current location and url can be accessed or changed. Additionally, in order to use the other routing components provided by React Router, a `BrowserRouter` provider component is necessary.
 
-
+___
 ## Making Our First Route
 Next, in `App.js`, we need to import all of the components we want to use for pages in our app. All necessary components have been provided for you already. We're more focused here on setting up proper _routing_ between them. To start, let's import the `Home` component from the `pages` folder into `App.js` along with the `<Route/>` component.
 
@@ -91,19 +91,21 @@ render(){
 
 - Components are provided to a `<Route/>` component through either a `component` or `render` prop, which tells the route which component to render.
 
-
+___
 ## React Router Props
 Now that we've added in our `Home` page, let's spin up the React app with `npm start`.
 
 Inside the `render()` method of `Home.js`, add in console.log of `this.props`.
 
-We haven't passed in any props to the component in our route, but you might notice that we now have access to `location`,`history`, and `match` props from within our `Home` component. These are props that React Router provides components rendered by `<Route/>` components by default. Let's break down what each of them is used for:
+We haven't passed in any props to the component in our route, but you might notice that we now have access to `location`,`history`, and `match` props from within our `Home` component. 
+
+These are props that React Router provides components rendered by `<Route/>` components by default. Let's break down what each of them is used for:
 
 - The `location` prop is used to determine the URL pattern, or location, of the current route. It has access to a `pathname` key that will give programmitc access to the current URL pattern.
 - The `history` prop allows us to manipulate routes dynamically and navigate between them. A common method used from history `push()`, which will tell React Router to navigate to the URL location provided in its arguments.
 - The `match` prop gives us detailed information about a route. An important key provided by match that we will be using is the `params` key, which gives us access to any URL params present in the route location.
 
-
+___
 ## Adding Links
 Now let's add in a way of getting back to the `Home` page. Import the `Nav` component from the `components` folder into `App.js` and render it inside the `<header>` tag.
 
@@ -129,9 +131,10 @@ export default class Nav extends Component {
 
 The `<NavLink>` component provided by React Router allows us to create links, like standard HTML `<a>` tags that navigate to a location in our application's routes.
 
-- The `<NavLink>` and `<Link>` components provided by React Router require a `to` prop, similar to an `href` in an `<a>` tag, that tell React Router where to navigate. The `to` prop needs to match one of the `path` props of a `<Route/>` to navigate between locations in our application.
+- The `<NavLink>` and `<Link>` components provided by React Router require a `to` prop, similar to an `href` in an `<a>` tag, that tell React Router where to navigate. 
+- The `to` prop needs to match one of the `path` props of a `<Route/>` to navigate between locations in our application.
 
-
+___
 ## Passing Props Into Route Components
 
 Let's add in another route to `App.js`
@@ -181,11 +184,13 @@ In the `<Route />` component for our `Home` page, we'll add in an `exact` prop b
 <Route exact path="/" component={Home} />
 ```
 
-What the `exact` prop does for our `<Route />` component is that it ensures the path is an _exact match_ to the path we've given the route, otherwise it will not render the component. Our `'/listings'` path _contained_ the `'/'` path, so we weren't able to navigate to it without specifying that the `'/'` path was only for an `exact` match on the URL location.
+What the `exact` prop does for our `<Route />` component is that it ensures the path is an _exact match_ to the path we've given the route, otherwise it will not render the component. 
+
+Our `'/listings'` path _contained_ the `'/'` path, so we weren't able to navigate to it without specifying that the `'/'` path was only for an `exact` match on the URL location.
 
 Now that we've set the `Home` route to be `exact`, we should be able to see all of our boat listings when we click on the `Listings` link from the navbar! Great!
 
-
+___
 ## Using Params and Router Props 
 Now that we have a route to view a list of all of our boats, how would we go about creating a Route for a specific boat to view its details? This would be a great case for creating a _dynamic route_, utilizing params!
 
@@ -235,6 +240,7 @@ Try clicking on a boat from the `Listings` page and see what happens.
 
 Wait, you can still see the whole list, but the boat is showing up below it? Well, it seems like now would be a great time to introduce React Router's `<Switch />` component, since it seems that our routes are stacking on top of each other.
 
+___
 ## Using a Switch Router Component
 React Router's `<Switch />` component is used as a wrapper for `<Route />` components to prevent them from stacking on top of each other when navigating. It ensures that only one route is being rendered at a time. 
 
@@ -260,6 +266,7 @@ It's common practice to set up your routes inside of a `<Switch/>` component to 
 
 Awesome, now let's add one final route inside of our switch in `App.js`.
 
+___
 ## Route Rendering methods
 In `App.js` we'll import our last `page` component, `BoatForm.js`, which will allow us to create new boats and add them to our listings.
 
@@ -334,6 +341,7 @@ Now that we've set up the Route properly, let's add one last thing to our `BoatF
 
 And with that, we've set up our `BoatForm`! Congrats!
 
+___
 ## You Do
 There is one component we haven't used from React Router, the `<Link/>` component. It works exactly like the `<NavLink/>` component with a `to` prop that connects it to a route.
 
