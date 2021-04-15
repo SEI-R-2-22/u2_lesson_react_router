@@ -1,6 +1,6 @@
 # React Router
 
-![](react-router.png)
+![](https://i.ytimg.com/vi/4ii2L3D20S4/maxresdefault.jpg)
 
 ## Overview
 
@@ -49,6 +49,8 @@ ReactDOM.render(
 ```
 
 By making `BrowserRouter` the root component of our app, all child components, including `App` will have access to a `history` object through which information like the current location and url can be accessed or changed. Additionally, in order to use the other routing components provided by React Router, a `BrowserRouter` provider component is necessary.
+
+![](https://ncoughlin.com/static/f0a60a719be3f7c71e060208204d7319/74549/1.png)
 
 ___
 ## Making Our First Route
