@@ -1,18 +1,17 @@
 # React Router
 
-![](react-router.png)
+![](https://i.ytimg.com/vi/4ii2L3D20S4/maxresdefault.jpg)
 
 ## Overview
 
 Up to this point, our React applications have been limited in size, allowing us to use basic control flow in our components' render methods to determine what gets rendered to our users. However, as our React applications grow in size and scope, we need an easier and more robust way of rendering different components. Additionally, we will want the ability to set information in the url parameters to make it easier for users to identify where they are in the application.
 
-React Router, while not the only, is the most commonly-used routing library for React. It is relatively straightforward to configure and integrates with the component architecture nicely (itself being nothing but a collection of components). Once configured, it essentially serves as the root component in a React application and renders other application components within itself depending on the path in the url.
-
+In this lesson, we'll be building the routing components and paths for a luxury boating site.
 
 ## Lesson Objectives
 - Learn about routing with react
-- Use React Router to map URLs to components
-- Use React Router to create links to different pages
+- Use React Router to create routes and links to different pages
+- Understand routing props
 
 ## Getting Started
 You've been provided with starter code and components. Do not modify any of the provided code besides `App.js`.
@@ -20,486 +19,351 @@ You've been provided with starter code and components. Do not modify any of the 
 - `cd` into the `starter-code` directory.
 - Run `npm install` to install our necessary packages.
 
+## What is React Router?
 
-## Instructions
-### What is React Router?
+React Router makes it easy for us to route URLs - not to different pages, but by dynamically loading different components on the same page as the user navigates to different URLs. Once we define how the URLs are routed to the components, React Router will manage our Single Page Application (SPA) `browser history` automatically. 
 
-React Router makes it easy for us to route URLs - not to different pages, but by dynamically loading different components on the same page as the user navigates to different URLs. Once we define how the URLs are routed to the components, React Router will manage our Single Page Application (SPA) `browser history` automatically. SPAs are web apps which load different sections of a website within the same page. The user feels as though they've never left the homepage because links swap out content and replace it with new content.
+## React Router Setup
 
-### React Router Setup
-
-First, we need to install `react-router-dom` and save it as a dependency to `package.json`.
+First, we need to install `react-router-dom` and save it as a dependency.
 
 ```sh
-npm install --save react-router-dom
+npm install react-router-dom
 ```
 
-To configure our current application to use React Router, we need to modify the entry to our app in `index.js`. We need to bring in the `Router` component and allow it to be the root component of our application. `Router` will, in turn, render `App` through which all the rest of our components will be rendered:
+To configure our current application to use React Router, we'll need to import it the `BrowserRouter` component into `index.js` and use it as a wrapper for our `App` component. `BrowserRouter` will, in turn, render `App` through which all the rest of our components will be rendered and give us access to router components:
 
 ```js
-import { BrowserRouter as Router } from 'react-router-dom'
+import { BrowserRouter } from 'react-router-dom'
 
 // ...
 
 ReactDOM.render(
-  <Router>
-    <App />
-  </Router>,
+  <React.StrictMode>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  </React.StrictMode>,
   document.getElementById('root')
 )
 ```
 
-Note that we are aliasing <code>BrowserRouter</code> as `Router` here for simplicity
+By making `BrowserRouter` the root component of our app, all child components, including `App` will have access to a `history` object through which information like the current location and url can be accessed or changed. Additionally, in order to use the other routing components provided by React Router, a `BrowserRouter` provider component is necessary.
 
-<details closed>
-<summary>
-  What is Aliasing
-</summary>
-<br>
+![](https://ncoughlin.com/static/f0a60a719be3f7c71e060208204d7319/74549/1.png)
 
-Aliasing is when we import a package by a different name such as the above. Here, instead of using <code>BrowserRouter</code> we "change" the name to <code>Router</code>. We can now use <code>Router</code> instead of a long name such as <code>BrowserRouter</code>.
-
-</details>
-<br>
-
-By making `Router` the root component of our app, all child components, including `App` will have access to a `history` object through which information like the current location and url can be accessed or changed. Additionally, in order to use the other routing components provided by React Router, a `Router` ancestor component is necessary.
-
-Next, in `App.js`, we need to import all of the components we want to use in our app. We'll also need to import `NavLink` and `Route` components from `react-router-dom`, since we'll be using them later on:
+___
+## Making Our First Route
+Next, in `App.js`, we need to import all of the components we want to use for pages in our app. All necessary components have been provided for you already. We're more focused here on setting up proper _routing_ between them. To start, let's import the `Home` component from the `pages` folder into `App.js` along with the `<Route/>` component.
 
 ```js
 // src/App.js
 import './App.css'
-import { Route, NavLink } from 'react-router-dom';
-import Home from './screens/Home';
-import Posts from './screens/Posts';
-import About from './screens/About';
-import Post from './screens/Post';
+import { Route } from 'react-router-dom';
+import Home from './pages/Home';
 ```
 
-___
-### Modifying App's `return` Statement
-
-Now that we have access to these components, we need to modify the `App` component's `return` statement to set up navigation. Think of `App.js` as an entry point for our application that will control the flow of URL routes and links.
-
-A common structure for using `react-router` in our `App.js` file is:
+Now we'll start by creating a `<Route/>` compoment within the `<main/>` tag and providing our page components to the routes. Make sure to import the `Route` component from `react-router-dom` first:
 
 ```js
-// src/App.js
+...
+import { Route } from 'react-router-dom';
 
-return (
-  <div classname="App">
-    <nav>
-      <NavLink to=""></NavLink>
-      <NavLink to=""></NavLink>
-    </nav>
-    <main>
-      <Route path="" render={} />
-    </main>
-  </div>
-)
-```
-
-- Wrapping navigation links in a `<nav>` used as a wrapper. This allows us to have most major site links available in one accessible place.
-- Use a `<main>` tag to wrap all content that will be served up by our `<Route>`s. This way, a proper semantic tag can be used to control the layout of our application while the various components that will render within it.
-
-While `React Router` has many availble available properties and components, we'll be using only a few to build our apps.
-
-- **`Link`** - a component for setting the URL and providing navigation between different components in our app without triggering a page refresh. It takes a `to` property, which sets the URL to whatever path is defined within it. Link can also be used inside of any component that is connected to a `Route`.
-
-- **`NavLink`** - is a component that works the same as **`Link`**, except it makes more properties available to us for styling and detecting which page we're on.
-
-- **`Route`** - a component that connects a certain `path` in the URL with the relevant component to `render` at that location.
-
-- **`Switch`** - a component used as a wrapper for `Route` components. The `Switch` component gives us control over which routes are currently being rendered.
-
-
-___
-### Route render methods
-
-You'll notice, in the first example we used `render` in our Route; however, this is not the only prop that the `Route` component can use to render content. This is because there are three ways to render something using a `<Route>`:
-```jsx
-// component
-<Route component={} />
-// render
-<Route render={} />
-// children
-<Route children={} />
-```
--  All three route render methods will be passed [`match`](https://reacttraining.com/react-router/web/api/match), [`location`](https://reacttraining.com/react-router/web/api/location), and [`history`](https://reacttraining.com/react-router/web/api/history) props. We won't be covering `<Route children>` for the scope of this class.
-
-___
-#### `<Route render={} />`
-
-The render method uses inline rendering which means that the rendered content doesn't need to unmount or remount. You pass in a function to be called when the [`location`](https://reacttraining.com/react-router/web/api/location) matches rather than creating a `React.createElement`.
-
-```js
-// convenient inline rendering
-<Route path="/home" render={() => <div>Home</div>}/>
-<Route path="/find-puppy" 
-  render={(props) => (
-    <SearchPuppies {...props}
-     formQuery={this.state.formQuery}
-     handleChange={this.handleChange}
-     handleSubmit={this.handleSubmit}
-    />
-  )}
-/>
-```
-
-- Notice how we're accessing props inside the `render` of our `<Route />`
-- We use an anonymous callback function `() =>` to access all props, including those provided by `react-router-dom`
-
-When putting `props` inside of our callback function, we are telling `React Router` to send over it's props, then we make use of the `spread` operator(`...`) to take all of the props from `React Router` and send them down to our component. 
-
-```js 
-render={(props) => <SomeComponent { ...props } />
-```
-
-___
-#### `<Route component={} />`
-
-Renders a component only when the requested location matches the path location. It renders with only the route props (`location`, `match`, and `history`) if no callback is provided.
-
-```js
-<Route path="/puppies/:puppyName" component={(props) => <DisplayPuppy { ...props } />} />;
-
-//The above would render the following component
-class DisplayPuppy extends class Component {
-  render() {
-    return <h1>Awww {this.props.match.params.puppyName} is such a good pup!</h1>;
-  }
+...
+render(){
+  return (
+    <div classname="App">
+      <header>
+  
+      </header>
+      <main>
+        <Route path="/" component={Home} />
+      </main>
+    </div>
+  );
 }
 ```
 
-In this case, the `DisplayPuppy` component will recieve the `match`, `location`, and `history` props.
 
-Looking deeper, the docs for the `component` method show us a little more about what is going on under the hood.
-- When you use component (instead of `render` or `children`) the router uses `React.createElement` to create a new React element from the given component. 
-- That means if you provide an inline function to the component prop, you would create a new component every render. 
-- This results in the existing component unmounting and the new component mounting instead of just updating the existing component."
-- To note: `<Route component>` takes precedence over `<Route render>` and both take precedence over `<Route children>` so don’t use more than one in the same `<Route>`.
+- Think of `App.js` as an entry point for our application that will control the flow of URL routes and links as we add them.
 
-All of these components have access to all the same route props (`location`, `match`, and `history`) as the other `Route` components. You can also explicitly pass other props (like functions and variables in the `state` object of `App.js`) that would not exist in `props` into the components like you would typically pass them as props.
+- A **`Route`** component connects a certain `path` in the URL with the relevant component to `render` at that location.
+
+- The `path` for a `<Route/>` refers to the URL that the route is associated with.
+
+- Components are provided to a `<Route/>` component through either a `component` or `render` prop, which tells the route which component to render.
 
 ___
-### Putting It All Into Practice
+## React Router Props
+Now that we've added in our `Home` page, let's spin up the React app with `npm start`.
 
-To prove some of these concepts, let's link our `App.js` to one of our components.
-- First let's make sure we've imported `Route` and `NavLink` from `react-router-dom` with destructuring like this:
+Inside the `render()` method of `Home.js`, add in console.log of `this.props`.
 
-```js
-import { Route, NavLink } from 'react-router-dom'
-```
+We haven't passed in any props to the component in our route, but you might notice that we now have access to `location`,`history`, and `match` props from within our `Home` component. 
 
-- Then add a `<Route />` between our `<main></main>` tags that will render our `<Home />` component with the `component` property.
+These are props that React Router provides components rendered by `<Route/>` components by default. Let's break down what each of them is used for:
 
-```js
-<div className="App">
-  <div className="links">
-    <nav>{/* Code Goes Here */}</nav>
-  </div>
-  <main>
-    <Route exact path="/" component={(props) => <Home {...props} />} />
-  </main>
-</div>
-```
+- The `location` prop is used to determine the URL pattern, or location, of the current route. It has access to a `pathname` key that will give programmitc access to the current URL pattern.
+- The `history` prop allows us to manipulate routes dynamically and navigate between them. A common method used from history `push()`, which will tell React Router to navigate to the URL location provided in its arguments.
+- The `match` prop gives us detailed information about a route. An important key provided by match that we will be using is the `params` key, which gives us access to any URL params present in the route location.
 
-- Great! Now head over to the `screens` folder and into `Home.js`
-and add in a `console.log` **before the `return` statement**:
+___
+## Adding Links
+Now let's add in a way of getting back to the `Home` page. Import the `Nav` component from the `components` folder into `App.js` and render it inside the `<header>` tag.
+
+Now, we'll import the `NavLink` component in our `Nav` component to set up a link back to the `Home` page:
 
 ```js
-import React, {Component} from 'react';
+import React, { Component } from 'react';
+import {NavLink} from 'react-router-dom';
 
-export default class Home extends Component {
+export default class Nav extends Component {
   render() {
-
-    console.log(this.props)
-
     return (
-      <div className="home">
+      <nav className="navbar">
+        <h4>Starboard</h4>
         <div>
-          <h1>
-            Welcome to {this.props.name || <strong>Insert Name Here</strong>}s Blog
-          </h1>
+          <NavLink to="/">Home</NavLink>
         </div>
-        <section className="flip-card">
-          <div className="inner">
-            <div className="front">
-              <img
-                src="https://images.unsplash.com/photo-1536060316316-2466bda904f1?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2000&q=80"
-                alt="You got this"
-              />
-            </div>
-            <div className="back">
-              <img
-                src="https://images.unsplash.com/photo-1504805572947-34fad45aed93?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60"
-                alt=" Work Hard"
-              />
-            </div>
-          </div>
-        </section>
-      </div>
+      </nav>
     );
   }
 }
 ```
 
-- Make sure to start your React server by running `npm start` in the starter code directory.
-- Head on over to your browser and open up your developer console. Open the console tab and let's see them props!
--  Try clicking on each key for`history`, `location`, and `match`
+The `<NavLink>` component provided by React Router allows us to create links, like standard HTML `<a>` tags that navigate to a location in our application's routes.
 
-```
-Object:
-  history:
-      action: "PUSH"
-      block: ƒ block(prompt)
-      createHref: ƒ createHref(location)
-      go: ƒ go(n)
-      goBack: ƒ goBack()
-      goForward: ƒ goForward()
-      length: 50
-      listen: ƒ listen(listener)
-      location: {pathname: "/", search: "", hash: "", state: null, key: "77e6kb"}
-      push: ƒ push(path, state)
-      replace: ƒ replace(path, state)
-      __proto__: Object
-  location:
-      hash: ""
-      key: "77e6kb"
-      pathname: "/"
-      search: ""
-      state: null
-      __proto__: Object
-  match:
-      isExact: true
-      params: {}
-      path: "/"
-      url: "/"
-      __proto__: Object
-      name: "Bruno"
-      staticContext: undefined
-    __proto__: Object
-```
+- The `<NavLink>` and `<Link>` components provided by React Router require a `to` prop, similar to an `href` in an `<a>` tag, that tell React Router where to navigate. 
+- The `to` prop needs to match one of the `path` props of a `<Route/>` to navigate between locations in our application.
 
-Wowzers! That's a lot of props! And guess what, they all came from `React Router`. Neat!
-- But wait, if you take a look at `Home.js` you'll see that we're looking for a `prop` called **`name`**. How do we get that over there??
+___
+## Passing Props Into Route Components
 
-To pass additional `props` to a component we would need to do the following:
-- Wrap the component in an anonymous function `() =>`
-- Write the component like we would be rendering it in JSX inside the anonymous function
-- Add in the props that we'll need. In this case, we'll add the `name` prop and give it a value of "Owls"
+Let's add in another route to `App.js`
+
+- Import the `Listings` component and add this route to `App.js`
+
 
 ```js
-<Route exact path="/" component={(props) => <Home { ...props } name="Owls" />} />
+<Route path='/listings' component={Listings} />
 ```
 
-Now our homepage should be displaying any name you entered as a prop.
+You might notice that the `Listings` component is making use of a prop called `boats`, however we aren't currently passing anything to it. Let's fix that.
 
+- When passing custom props down to a component rendered by a `<Route/>` we need to write an anonymous function inside of the `component` or `render` prop being used to render the component.
 
-### Links and Params
-So now what is a `<Route/>` Component...
+- The component being rendered should be written as a tag inside of this anonymous function
 
-Let's stop here and take a look at the following code:
+Let's change the `component` prop of our `'/listings'` route:
 
 ```js
-<Route path="/puppies/:puppyName" component={(props) => <DisplayPuppy {...props} />} />;
+<Route path='/listings' component={() => <Listings />} />
+```
 
-//The above would render the following component
-export default class DisplayPuppy extends Component {
-  render() {
-    return <h1>Awww {this.props.match.params.puppyName} is such a good pup!</h1>;
-  }
+Now, we'll pass in the props we'll need to be available in `Listings.js`:
+
+
+```js
+<Route path='/listings' component={(props) => <Listings {...props} boats={this.state.boats} />} />
+```
+
+- Here we've passed in the custom prop of `boats`, which gives our `Listings` component access to the array of boats in state.
+- We've also passed `props` as an argument in our anonymous function and added `{...props}` to our component. This gives us access to the props provided by React Router.
+
+Now that we've added in the route, our boats should be rendering in our `Listings` component at the `'/listings'` location. 
+- Let's add in a quick `<NavLink>` to `Nav.js` to allow quick access to our listings. 
+- It should have a `to` prop of `'/listings'` to connect to the route we've just set up.
+
+Try clicking on the link in the navbar to see if your route is working properly! You should see all of the boats passed from our boats state on the page.
+
+Wait, the boats aren't showing up? 
+
+Well, it looks like we'll need to differentiate our routes then!
+
+In the `<Route />` component for our `Home` page, we'll add in an `exact` prop before its `path`
+
+```js
+<Route exact path="/" component={Home} />
+```
+
+What the `exact` prop does for our `<Route />` component is that it ensures the path is an _exact match_ to the path we've given the route, otherwise it will not render the component. 
+
+Our `'/listings'` path _contained_ the `'/'` path, so we weren't able to navigate to it without specifying that the `'/'` path was only for an `exact` match on the URL location.
+
+Now that we've set the `Home` route to be `exact`, we should be able to see all of our boat listings when we click on the `Listings` link from the navbar! Great!
+
+___
+## Using Params and Router Props 
+Now that we have a route to view a list of all of our boats, how would we go about creating a Route for a specific boat to view its details? This would be a great case for creating a _dynamic route_, utilizing params!
+
+- In `App.js`, import the `BoatDetails` component.
+- Now we'll set up a `<Route />` for it that uses params, or viariable URL patterns, to create navigation for every unique boat
+- We'll also render the `BoatDetails` component inside of an anonymous function since we'll need to pass props to it as well.
+
+```js
+<Route path="/listings/:id" component={(props) => <BoatDetails {...props} boats={this.state.boats}>}>
+```
+
+Note the `/:id` following the `/listings` portion of the `path`. What we've done here by using the colon `:` followed by `id` is establish a variable `id` _within our URL pattern_ for this route, or in other words, an id param.
+
+- Params are used to create dynamic routes that change depending on the live data passed into the param. In this case, our param is denoted by `'/:id'`
+
+Ok, but how do we navigate to this route? 
+
+Let's do that from our `Listings.js` component, since it has access to data about our boats.
+
+You might have noticed that `Listings.js` has a method called `showBoat()` that is currently doing nothing. We'll alter it now to create dynamic navigation to our `'/listings'` route.
+
+- Since each `boat` is being passed as an argument into the method, we'll make use of a specific attribute to create a dynamic route.
+- Add the following to the `showBoat()` method in `Listings.js`:
+
+```js
+this.props.history.push(`/listings/${boat.id}`)
+```
+
+Here we're using React Router's `history` prop and its `.push()` method to tell our router to navigate to a new route. We're passing the `id` attribute of the boat into the new `location` we want to navigate to. This way, we will have a unique route path for every boat in our list. For example, if we had a boat with an id of 1, we would be navigated to `'/listings/1'` when this method is fired for that boat.
+
+Great, we've set up a way of navigating to a unique boat, but we aren't gettin the data to display just yet. 
+
+Let's move over to `BoatDetails.js` to fix that. It currently has a `ComponentDidMount()` life cycle method that isn't doing anything and a state property for a `boat`. Add the following to the `ComponentDidMount`.
+
+```js
+componentDidMount(){
+    let selectedBoat = this.props.boats.find(boat => boat.id === parseInt(this.props.match.params.id))
+    this.setState({boat: selectedBoat})
 }
 ```
 
-I'll bet you're wondering what in the world is this `:puppyName`. Why is there a colon `:` in front of it? This my friends is called a **`url parameter`**. 
+- Here, we're using React Router's `match.params` prop at the key of `id` to pull down the id param from our URL location.
+- With access to the id from the params, we can use it to find a specific boat by its id from the `boats` array that was passed as props into our `BoatDetails` component.
+- Finally, we'll set the state of `boat` to the boat we've found to display it when the component is mounted.
 
-Think of it as a placeholder for some sort of data that we can place there later on. Say for example I'm looking at pets on a website and I see this really cute puppy. I click on it and it takes me to that specific puppies page. Well now, how did we really do that, what is this hokus pokus stuff?
+Try clicking on a boat from the `Listings` page and see what happens.
 
-- Whenever you display some sort of data, you'll usually have access to it's specific unique `id` or `name`. 
-- We can use one or both to look through our data and find that specific puppy!
-- We'll be making of use of this in the near future.
-
-First let's get our navigation links set up, we'll be doing this using the `<NavLink>` component.
-- Make sure you have `NavLink` imported from `react-router-dom` in `App.js`
-- Then add in the following code:
-
-```js
-<nav>
-  <NavLink to="/" activeClassName="active" >
-    Home
-  </NavLink>
-  <NavLink to="/posts" activeClassName="active">
-    Posts
-  </NavLink>
-</nav>
-```
-
-<details><summary>Your <code>App.js</code> return should look like this:</summary>
-
-  ```js
-  return (
-    <div className="App">
-      <div className="links">
-        <nav>
-          <NavLink to="/" activeClassName="active" >
-            Home
-          </NavLink>
-          <NavLink to="/posts" activeClassName="active">
-            Posts
-          </NavLink>
-        </nav>
-      </div>
-
-      <main>
-        <Route exact path="/" component={props => <Home {...props} name="Owls" />} />
-      </main>
-    </div>
-  )
-  ```
-
-</details>
-
-So you may have noticed that we've been using something called `exact` when writing our routes.
-- What exactly is `exact`?
-- `Exact` is a way for us to tell `React Router` that we want an **exact** match in our urls.
-- Typically, you'll only use `exact` to render a homepage component when you application loads
-
-First let's display all of the posts on our blog and our home page. Add in the following line between the two `<main></main>` tags and after our first `<Route>`:
-
-```js
-<Route path="/posts" component={(props) => <Posts {...props} />} />
-```
-
-<details><summary>Your <code>App.js</code> should now look like this:</summary>
-
-  ```jsx
-  <div className="App">
-    <div className="links">
-      <nav>
-        <NavLink to="/" activeClassName="active" >
-          Home
-        </NavLink>
-        <NavLink to="/posts" activeClassName="active">
-          Posts
-        </NavLink>
-      </nav>
-    </div>
-
-    <main>
-      <Route exact path="/" component={(props) => <Home {...props} name="Owls" />} />
-      <Route path="/posts" component={(props) => <Posts {...props} />} />
-    </main>
-  </div>
-  ```
-  
-</details
-
-Great, we can now hop over to the `Posts` page and view all of the posts.
-Awesome, someone's been very busy writing I see!
-
-Now let's actually set up our router so that we can view a specific post:
-Add the following line in between the closing `<main>` tag and our `/posts` route.
-
-```js
-<Route path="/posts/:post_id" component={(props) => <Post {...props} />} />
-```
-
-<details><summary>You should have the following in <code>App.js</code>:</summary>
-
-  ```js
-  <div className="App">
-    <div className="links">
-      <nav>
-        <NavLink to="/" activeClassName="active" >
-          Home
-        </NavLink>
-        <NavLink to="/posts" activeClassName="active">
-          Posts
-        </NavLink>
-      </nav>
-    </div>
-
-    <main>
-      <Route exact path="/" component={(props) => <Home {...props} name="Owls" />} />
-      <Route path="/posts" component={(props) => <Posts {...props} />} />
-      <Route path="/posts/:post_id" component={(props) => <Post {...props} />} />
-    </main>
-  </div>
-  ```
-
-</details>
-
-Welp theres that pesky `:post_id` thing again. Do you remember when I said "we'll make use of this in the near future"? Well, that time has arrived, let's see it in action!
-
-Click on a specific post in the `/posts` page and pay close attention to the url bar. What do you notice?
-
-Well for one, our url used to look a little like this:
-`http://localhost:3000/posts`
-
-Now it looks a little something like this: `http://localhost:3000/posts/3`.
-
-The `:post_id` parameter is missing! Well, actually... it's not, remember when we mentioned that it was just a placeholder, well that's exactly what it is. A placeholder until we send a specific data point to navigate to. 
-- Let's look at the `PostCard` component in our `components` folder.
-- Notice how it is using `react-router-dom`'s `<Link />` component to dynamicall render posts with different ids.
-
-But wait, why are we still seeing all of the posts? Something tells me we might need a `Switch`.
+Wait, you can still see the whole list, but the boat is showing up below it? Well, it seems like now would be a great time to introduce React Router's `<Switch />` component, since it seems that our routes are stacking on top of each other.
 
 ___
-### Implementing A `<Switch>` In Our Routes
-What exactly is a `<Switch>`? Well as the name suggests it works exactly like a light switch. It prevents routes that we don't need at the current time from loading. Why would I need that you ask, well let me show you:
+## Using a Switch Router Component
+React Router's `<Switch />` component is used as a wrapper for `<Route />` components to prevent them from stacking on top of each other when navigating. It ensures that only one route is being rendered at a time. 
 
-<img height="400" src='https://i1.wp.com/storage.googleapis.com/blog-images-backup/1*paiSxiVwaPH4McITwinmrg.gif?ssl=1'>
+We'll also add in the `exact` prop to our `/listings` route, since its path is contained by our `/listings/:id` route.
 
-If you notice, there are multiple `Route`'s being rendered, which isn't ideal. All of these components are all rendering at the same time. The only thing is, you can't physically see them. They are kind of like a stack of papers on a desk, you can see whats on the top paper, but not the ones underneath. Say for example these components were handling quite a bit of data and logic, we would start running into performance issues due to all of the code being loaded at the same time. Our browsers would start hogging up all of our computer memory until it becomes unuseable. I don't know about you but, that doesn't sound like a good thing.
-
-We can fix it using the `<Switch>` component which also comes with `React Router`!
-Let's import our `<Switch>` in `App.js`:
+To use it, we'll wrap it around our routes in `App.js` like so:
 
 ```js
-import { NavLink, Route, Switch } from 'react-router-dom'
-```
+import { Route, Switch } from 'react-router-dom';
 
-and wrap it around our `<Route>` components:
+...
 
-```js
 <Switch>
-    <Route exact path="/" component={(props) => <Home {...props} name="Owls" />} />
-    <Route path="/posts" component={(props) => <Posts {...props} />} />
-    <Route path="/posts/:post_id" component={(props) => <Post {...props} />} />
+  <Route exact path="/" component={Home}/>
+  <Route exact path="/listings" component={(props) => <Listings {...props} boats={this.state.boats} />} />
+  <Route path="/listings/:id" render={(props) => <BoatDetails {...props} boats={this.state.boats} />} />
 </Switch>
 ```
 
-Now jump into your developer console and look at your `React dev tools`:
+Now only our `BoatDetails` component should render when we click on a listing.
 
+It's common practice to set up your routes inside of a `<Switch/>` component to begin with, but we've held off until now to understand why its important to use a `<Switch/>`
 
-You'll notice that now React is only rendering one of our `Route` components at a time! Much better!
+Awesome, now let's add one final route inside of our switch in `App.js`.
 
 ___
-### You Do: Add a Fourth Route
+## Route Rendering methods
+In `App.js` we'll import our last `page` component, `BoatForm.js`, which will allow us to create new boats and add them to our listings.
 
-> 10 minute exercise / 5 minute review
-
-Add in the `<About>` component and a `<Navlink>` for that page. Think about what your url path should be!
-Experiment with passing various `props` through to the `<About/>` component.
-
-### Turn and Talk 
-
-If you were curious enough to poke around the code base, you may have noticed a bit of code that looks like this:
+We'll also need a `<Route />` for this component inside of our `<Switch />`:
 
 ```js
- <Link to={`/posts/${this.props.id}`}>
+<Route path="/new" component={(props) => <BoatForm {...props} newBoat={this.state.newBoat} handleChange={this.handleChange} addBoat={this.addBoat} />} />
 ```
+
+Our `BoatForm` has access to two methods from `App.js`, the `handleChange()` method, which will update the state of `newBoat` from its form inputs and `addBoat()`, which will add a new boat into our `boats` state.
+
+Let's add in a `NavLink` in `Nav.js` that connects to this route.
+
+```js
+<NavLink to='/new'>New Boat</NavLink>
+```
+
+Now that we can view this route, let's try adding in a new boat!
+
+Oh no, don't tell me the form is acting up! What could possibly be wrong with it?
+
+Actually, the _render method_ for our `'/new'` `<Route/>` is the issue here. But why? Let's talk about `<Route />` component render props.
+
+You might notice we've used the `component` prop in our route to render the `<Home />` component. The` <Route/>` component actually has 3 ways to render a component. 
+
+
+```jsx
+// component
+<Route path="" component={} />
+// render
+<Route path="" render={} />
+// children
+<Route path="" children={} />
+```
+
+Let's break them down before moving on. We won't be covering `<Route children>` for the scope of this class, but knowing the differences between `render` and `component` is important when working with React Router.
+
+#### `<Route component={} />`
+
+The `component` method renders a component when the requested [`location`](https://reacttraining.com/react-router/web/api/location), or URL pattern, matches a `<Route/>`'s `path`.
+
+- When you use component the router uses `React.createElement` to create a new React element from the given component. 
+- That means if you provide an inline function to the component prop, you would create a new component every render. 
+- This results in the existing component unmounting and the new component mounting instead of just updating the existing component.
+
+When might this be a better choice for our `<Route />`?
+- The `component` would be the preferred choice for components that are mostly static display components, meaning that they will not be updating continually with new data.
+
+#### `<Route render={} />`
+
+The render method uses inline rendering, meaning that the rendered content doesn't need to unmount or remount. You pass in a _function_ to be called when the [`location`](https://reacttraining.com/react-router/web/api/location), or URL pattern, matches rather than creating a `React.createElement`.
+
+When is it a better idea to use the `render` prop for a component over `component` with a `<Route/>`? 
+
+- Since the `render` method allows for inline rendering, it is much more useful to use when routing to pages that might have form elements or components.
+- Since a component will mount and unmount with a new component on every render with the `component` method, the `render` method is the preferred choice for components with form inputs or components that are continually updating.
+
+Note: `<Route component>` takes precedence over `<Route render>` and both take precedence over `<Route children>` so don’t use more than one in the same `<Route>`.
+
+
+Now that we know a little more about rendering components inside of `<Route />` components, let's fix our `/new` route by using the proper rendering prop. Its issue was that it was mounting and unmounting the `BoatForm` component on every render, which makes typing into the inputs very difficult!
+
+```js
+<Route path="/new" render={(props) => <BoatForm {...props} newBoat={this.state.newBoat} handleChange={this.handleChange} addBoat={this.addBoat} />} />
+```
+
+Now that we've set up the Route properly, let's add one last thing to our `BoatForm`'s `handleSubmit()` method so that it navigates back to the listings after we create a new boat.
+
+```js
+ this.props.history.push('/listings')
+ ```
+
+And with that, we've set up our `BoatForm`! Congrats!
+
+___
+## You Do
+There is one component we haven't used from React Router, the `<Link/>` component. It works exactly like the `<NavLink/>` component with a `to` prop that connects it to a route.
+
+For this section we'll need to make use of 2 `<Link/>` components.
+- In `Listings.js` import a `Link` component from React Router and use it to create a back button that takes us back to the `Home` page at the `'/'` route.
+- In `BoatDetails.js` import another `Link` component to create a back button that takes us back to the `'/listings'` route.
+
 
 ___
 ## Recap
 With React Router, we're able to create navigation in our applications with special components and properties. Key concepts covered here include:
-- `<Switch />`
-- `<Route />`
-- `<NavLink />`
-- `<Link />`
-- `render`
-- `component`
+- `<Switch />` - Used to ensure only one route is rendered at a time
+- `<Route />` - Used to render specific components at different URL locations
+- `<NavLink />` - Used to link to different routes, usually in a navbar
+- `<Link />` - Used to link to different routes, usually from within a component rendered by a route
+- `render` - Used to render a component for a route, allows for dynamic rendering, which is useful when working with forms
+- `component` - Used to render a component for a route, usually best used with static display components where data isn't changing frequently
+- `paths` - Used to establish the location (URL pattern) for a route. The `exact` prop can be used alongside it to ensure that only an exact match for the path will render a route
+- `params` - Variable key values used inside of the URL pattern to create dynamic routing
+- `history` - Used to navigate between routes dynamically
 
 ## Resources
 - [React Router Quick Start](https://reacttraining.com/react-router/web/guides/quick-start)
