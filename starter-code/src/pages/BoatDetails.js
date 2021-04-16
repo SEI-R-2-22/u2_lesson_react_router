@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 
-
 export default class BoatDetails extends Component {
   constructor(props){
     super(props)
@@ -10,8 +9,7 @@ export default class BoatDetails extends Component {
   }
 
   componentDidMount(){
-    let selectedBoat = this.props.boats.find(boat => boat.id === parseInt(this.props.match.params.id))
-    this.setState({boat: selectedBoat})
+  
   }
 
   render() {

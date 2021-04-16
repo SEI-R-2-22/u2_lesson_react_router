@@ -1,13 +1,8 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import './styles/App.css';
-import {Route, Switch} from 'react-router-dom';
-import Home from './pages/Home';
-import Listings from './pages/Listings';
-import BoatDetails from './pages/BoatDetails';
-import BoatForm from './pages/BoatForm';
-import Nav from './components/Nav';
+// imports here
 
-
+// The boatArr is passed into state as the initial state for 'boats' in App.js
 const boatArr = [
   {id: 1, name: 'Ever Given', img: 'https://ichef.bbci.co.uk/news/976/cpsprodpb/11E7/production/_117738540_066475707.jpg', description: 'Ever Given is one of the largest container ships in the world. On March 23rd, 2021, the ship ran aground in the Suez Canal, blocking the Canal for 6 days.', price: 6000000000},
   {id: 2, name: 'RMS Titanic', img: 'https://i.kinja-img.com/gawker-media/image/upload/s--IUAE6tit--/c_fill,fl_progressive,g_center,h_900,q_80,w_1600/1338882343954332079.jpg', description: 'The RMS Titanic was the product of powerful strife among competitors in the first half of the 20th century. It sank in the early hours of April 15, 1912, off the coast of Newfoundland in the North Atlantic after sideswiping an iceberg during its maiden voyage. ', price: 200000},
@@ -18,8 +13,6 @@ const boatArr = [
   {id: 7, name: 'Queen Anne\'s Revenge', img: 'https://i.pinimg.com/736x/a4/97/5f/a4975fa1835939904404e77b12e7cce7.jpg', description: 'Queen Anne\'s Revenge was an early-18th-century ship, most famously used as a flagship by Edward Teach, better known by his nickname Blackbeard. Shortly after blockading Charleston harbor in May 1718, and refusing to accept the Governor\'s offer of a pardon, Blackbeard ran Queen Anne\'s Revenge aground while entering Beaufort Inlet, North Carolina on 10 June 1718.', price: 8000000},
   {id: 8, name: 'S.S. Edmund Fitzgerald', img: 'https://www.gannett-cdn.com/-mm-/32c13c63d617f766dcf0f47ec8200d9b7c042d7d/c=0-103-2000-1233&r=x1683&c=3200x1680/local/-/media/2015/11/06/DetroitNews/DetroitNews/635823760777913510-GLSHS-Fitzgerald-StMarys-copy.jpg', description: 'S.S. Edmund Fitzgerald was an American Great Lakes freighter that sank in Lake Superior during a storm on November 10, 1975, with the loss of the entire crew of 29 men. When launched on June 7, 1958, she was the largest ship on North America\'s Great Lakes, and she remains the largest to have sunk there.', price: 900000},
 ]
-
-
 
 export default class App extends Component {
   constructor(props){
@@ -32,40 +25,26 @@ export default class App extends Component {
 
   addBoat = (e) => {
     e.preventDefault()
-    const currentBoats = this.state.boats
-    const newBoat = {
-      ...this.state.newBoat, 
-      id: parseInt(this.state.boats.length + 1),
-      price: parseInt(this.state.newBoat.price),
-    }
+    const currentBoats = this.state.boats;
+    const newBoat = {...this.state.newBoat, id: parseInt(this.state.boats.length + 1), price: parseInt(this.state.newBoat.price)};
     currentBoats.push(newBoat);
-    this.setState({
-      boats: currentBoats, 
-      newBoat: {id: '', name: '', img: '', description: '', price: ''}
-    })
+    this.setState({boats: currentBoats, newBoat: {id: '', name: '', img: '', description: '', price: ''}});
   }
 
   handleChange = (e) => {
-    this.setState({newBoat: {...this.state.newBoat, [e.target.name]: e.target.value}})
+    this.setState({newBoat: {...this.state.newBoat, [e.target.name]: e.target.value}});
   }
 
   render(){
     return (
       <div className="App">
         <header>
-          <Nav />
+          {/* Import Nav here */}
         </header>
         <main>
-          <Switch>
-            <Route exact path="/" component={Home}/>
-            <Route exact path="/listings" component={(props) => <Listings {...props} boats={this.state.boats} />} />
-            <Route path="/listings/:id" render={(props) => <BoatDetails {...props} boats={this.state.boats} />} />
-            <Route path="/new" render={(props) => <BoatForm {...props} newBoat={this.state.newBoat} handleChange={this.handleChange} addBoat={this.addBoat} boats={this.state.boats}/>} />
-          </Switch>
+          {/* Create Routes to page components here */}
         </main>
       </div>
     );
   }
 }
-
-

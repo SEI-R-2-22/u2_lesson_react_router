@@ -5,7 +5,6 @@ export default class BoatForm extends Component {
   
   handleSubmit = (e) => {
     this.props.addBoat(e)
-    this.props.history.push('/listings')
   }
 
   render() {
