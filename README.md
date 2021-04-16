@@ -242,7 +242,10 @@ Wait, you can still see the whole list, but the boat is showing up below it? Wel
 
 ___
 ## Using a Switch Router Component
-React Router's `<Switch />` component is used as a wrapper for `<Route />` components to prevent them from stacking on top of each other when navigating. It ensures that only one route is being rendered at a time. 
+
+<img src="https://www.freightrailreform.com/wp-content/uploads/2016/07/Rail-Switch.jpg" alt="switch" height="400" />
+
+React Router's `<Switch />` component is used as a wrapper for `<Route />` components to prevent them from stacking on top of each other when navigating. Like a train switch ensures trains stay on the rails when switching tracks, it ensures that only one route is being rendered at a time. 
 
 We'll also add in the `exact` prop to our `/listings` route, since its path is contained by our `/listings/:id` route and should be distinct.
 
