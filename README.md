@@ -66,9 +66,7 @@ import Home from './pages/Home';
 Now we'll start by creating a `<Route/>` compoment within the `<main/>` tag and providing our page components to the routes. Make sure to import the `Route` component from `react-router-dom` first:
 
 ```js
-...
-import { Route } from 'react-router-dom';
-
+// App.js
 ...
 render(){
   return (
@@ -89,7 +87,7 @@ render(){
 
 - A **`Route`** component connects a certain `path` in the URL with the relevant component to `render` at that location.
 
-- The `path` for a `<Route/>` refers to the URL that the route is associated with.
+- The `path` for a `<Route/>` refers to the URL that the route is associated with. Note: the `'/'` path is referred to as the root path of our application, as it is the first path we have access to when our site loads, so it makes the most sense to render a `Home` page at this route.
 
 - Components are provided to a `<Route/>` component through either a `component` or `render` prop, which tells the route which component to render.
 
@@ -246,7 +244,7 @@ ___
 ## Using a Switch Router Component
 React Router's `<Switch />` component is used as a wrapper for `<Route />` components to prevent them from stacking on top of each other when navigating. It ensures that only one route is being rendered at a time. 
 
-We'll also add in the `exact` prop to our `/listings` route, since its path is contained by our `/listings/:id` route.
+We'll also add in the `exact` prop to our `/listings` route, since its path is contained by our `/listings/:id` route and should be distinct.
 
 To use it, we'll wrap it around our routes in `App.js` like so:
 
