@@ -19,7 +19,7 @@ In this lesson, we'll be building the routing components and paths for a luxury 
 You've been provided with starter code and components. Do not modify any of the provided code besides `App.js`.
 
 - `Fork` and `clone` this repository.
-- `cd` into the `starter-code` directory.
+- `cd` into this repo
 - Run `npm install` to install our necessary packages.
 
 ## What is React Router?
@@ -63,7 +63,9 @@ Next, in `App.js`, we need to import all of the components we want to use for pa
 
 ```js
 // src/App.js
-import './App.css'
+import React, { useState } from 'react'
+import { boats as boatArr } from './data/boats'
+import './styles/App.css'
 import { Route } from 'react-router-dom'
 import Home from './pages/Home'
 ```
@@ -165,7 +167,7 @@ Now, we'll pass in the props we'll need to be available in `Listings.js`:
 ```js
 <Route
   path="/listings"
-  component={(props) => <Listings {...props} boats={this.state.boats} />}
+  component={(props) => <Listings {...props} boats={boats} />}
 />
 ```
 
@@ -293,9 +295,9 @@ We'll also need a `<Route />` for this component inside of our `<Switch />`:
   component={(props) => (
     <BoatForm
       {...props}
-      newBoat={this.state.newBoat}
-      handleChange={this.handleChange}
-      addBoat={this.addBoat}
+      newBoat={newBoat}
+      handleChange={handleChange}
+      addBoat={addBoat}
     />
   )}
 />
@@ -359,9 +361,9 @@ Now that we know a little more about rendering components inside of `<Route />` 
   render={(props) => (
     <BoatForm
       {...props}
-      newBoat={this.state.newBoat}
-      handleChange={this.handleChange}
-      addBoat={this.addBoat}
+      newBoat={newBoat}
+      handleChange={handleChange}
+      addBoat={addBoat}
     />
   )}
 />
@@ -370,7 +372,7 @@ Now that we know a little more about rendering components inside of `<Route />` 
 Now that we've set up the Route properly, let's add one last thing to our `BoatForm`'s `handleSubmit()` method so that it navigates back to the listings after we create a new boat.
 
 ```js
-this.props.history.push('/listings')
+props.history.push('/listings')
 ```
 
 And with that, we've set up our `BoatForm`! Congrats!
