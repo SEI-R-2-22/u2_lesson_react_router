@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { boats as boatArr } from './data/boats'
+import boatArr from './data/boats'
 import './styles/App.css'
 // imports here
 
