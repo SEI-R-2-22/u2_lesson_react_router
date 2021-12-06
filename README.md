@@ -117,14 +117,14 @@ Now, we'll import the `NavLink` component in our `Nav` component to set up a lin
 
 ```js
 import React from 'react'
-import { NavLink } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 function Nav() {
   return (
     <nav className="navbar">
       <h4>Starboard</h4>
       <div>
-        <NavLink to="/">Home</NavLink>
+        <Link to="/">Home</Link>
       </div>
     </nav>
   )
@@ -133,9 +133,9 @@ function Nav() {
 export default Nav
 ```
 
-The `<NavLink>` component provided by React Router allows us to create links, like standard HTML `<a>` tags that navigate to a location in our application's routes.
+The `<Link>` component provided by React Router allows us to create links, like standard HTML `<a>` tags that navigate to a location in our application's routes.
 
-- The `<NavLink>` and `<Link>` components provided by React Router require a `to` prop, similar to an `href` in an `<a>` tag, that tell React Router where to navigate.
+- The `<Link>` and `<NavLink>` components provided by React Router require a `to` prop, similar to an `href` in an `<a>` tag, that tell React Router where to navigate.
 - The `to` prop needs to match one of the `path` props of a `<Route/>` to navigate between locations in our application.
 
 ---
@@ -176,7 +176,7 @@ Now, we'll pass in the props we'll need to be available in `Listings.js`:
 
 Now that we've added in the route, our boats should be rendering in our `Listings` component at the `'/listings'` location.
 
-- Let's add in a quick `<NavLink>` to `Nav.js` to allow quick access to our listings.
+- Let's add in a quick `<Link>` to `Nav.js` to allow quick access to our listings.
 - It should have a `to` prop of `'/listings'` to connect to the route we've just set up.
 
 Try clicking on the link in the navbar to see if your route is working properly! You should see all of the boats passed from our boats state on the page.
@@ -305,10 +305,10 @@ We'll also need a `<Route />` for this component inside of our `<Switch />`:
 
 Our `BoatForm` has access to two methods from `App.js`, the `handleChange()` method, which will update the state of `newBoat` from its form inputs and `addBoat()`, which will add a new boat into our `boats` state.
 
-Let's add in a `NavLink` in `Nav.js` that connects to this route.
+Let's add in a `Link` in `Nav.js` that connects to this route.
 
 ```js
-<NavLink to="/new">New Boat</NavLink>
+<Link to="/new">New Boat</Link>
 ```
 
 Now that we can view this route, let's try adding in a new boat!
