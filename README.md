@@ -113,7 +113,7 @@ These are props that React Router provides components rendered by `<Route/>` com
 
 Now let's add in a way of getting back to the `Home` page. Import the `Nav` component from the `components` folder into `App.js` and render it inside the `<header>` tag.
 
-Now, we'll import the `NavLink` component in our `Nav` component to set up a link back to the `Home` page:
+Now, we'll import the `Link` component in our `Nav` component to set up a link back to the `Home` page:
 
 ```js
 import React from 'react'
