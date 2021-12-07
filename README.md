@@ -31,7 +31,7 @@ React Router makes it easy for us to route URLs - not to different pages, but by
 First, we need to install `react-router-dom` and save it as a dependency.
 
 ```sh
-npm install react-router-dom
+npm install react-router-dom@5
 ```
 
 To configure our current application to use React Router, we'll need to import it the `BrowserRouter` component into `index.js` and use it as a wrapper for our `App` component. `BrowserRouter` will, in turn, render `App` through which all the rest of our components will be rendered and give us access to router components:
