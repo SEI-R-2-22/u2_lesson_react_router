@@ -64,7 +64,7 @@ Next, in `App.js`, we need to import all of the components we want to use for pa
 ```js
 // src/App.js
 import React, { useState } from 'react'
-import { boats as boatArr } from './data/boats'
+import boats from './data/boats'
 import './styles/App.css'
 import { Route } from 'react-router-dom'
 import Home from './pages/Home'
