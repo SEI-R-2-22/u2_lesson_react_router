@@ -86,7 +86,10 @@ Now, we'll start by creating a `<Route/>` component within the `<main>` tag and 
         {/* Import Nav here */}
       </header>
       <main>
-        <Route path="/" component={ Home } />
+        <Route 
+          path="/"
+          component={ Home }
+        />
       </main>
     </div>
   )
@@ -170,7 +173,10 @@ Let's add in another route to `App.js`...
 - Import the `Listings` component and add this route to `App.js` just below our other `<Route/>`.
 
 ```js
-<Route path="/listings" component={ Listings } />
+<Route 
+  path="/listings"
+  component={ Listings }
+/>
 ```
 
 You might notice that the `Listings` component is making use of a prop called `boats`, however we aren't currently passing any props to it. Let's fix that.
@@ -214,7 +220,10 @@ Well, it looks like we'll need to differentiate our routes then!
 In the `<Route/>` component for our `Home` page, we'll add in an `exact` keyword before our `path`...
 
 ```js
-<Route exact path="/" component={ Home } />
+<Route 
+  exact path="/"
+  component={ Home }
+/>
 ```
 
 What the `exact` keyword does for our `<Route/>` component is that it ensures the path is an _exact match_ to the path we've given the route, otherwise *both routes are hit* and *both components are rendered*. Not great.
@@ -234,7 +243,10 @@ Now that we have a route to view a list of all of our boats, how would we go abo
 - We'll also render the `BoatDetails` component inside of an anonymous function since we'll need to pass props to it as well.
 
 ```js
-<Route path="/listings/:id" component={(props) => <BoatDetails {...props} boats={boats} />} />
+<Route 
+  path="/listings/:id"
+  component={(props) => <BoatDetails {...props} boats={boats} />}
+/>
 ```
 
 Note the `/:id` following the `/listings` portion of the `path`. What we've done here by using the colon `:` followed by `id` is establish a variable `id` _within our URL pattern_ for this route, or in other words, an id param.
