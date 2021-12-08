@@ -64,7 +64,7 @@ Next, in `App.js`, we need to import all of the components we want to use for pa
 ```js
 // src/App.js
 import React, { useState } from 'react'
-import { boats as boatArr } from './data/boats'
+import boats from './data/boats'
 import './styles/App.css'
 import { Route } from 'react-router-dom'
 import Home from './pages/Home'
@@ -77,8 +77,12 @@ Now we'll start by creating a `<Route/>` compoment within the `<main/>` tag and 
 ...
   return (
     <div className="App">
-      <header>{/* Import Nav here */}</header>
-      <main>{/* Create Routes to page components here */}</main>
+      <header>
+        <Nav />
+      </header>
+      <main>
+        <Route path="/" component={ Home } />
+      </main>
     </div>
   )
 ```
@@ -96,8 +100,6 @@ Now we'll start by creating a `<Route/>` compoment within the `<main/>` tag and 
 ## React Router Props
 
 Now that we've added in our `Home` page, let's spin up the React app with `npm start`.
-
-Inside of `Home.js`, add in console.log of `props`.
 
 We haven't passed in any props to the component in our route, but you might notice that we now have access to `location`,`history`, and `match` props from within our `Home` component.
 
@@ -208,7 +210,7 @@ Now that we have a route to view a list of all of our boats, how would we go abo
 - We'll also render the `BoatDetails` component inside of an anonymous function since we'll need to pass props to it as well.
 
 ```js
-<Route path="/listings/:id" component={(props) => <BoatDetails {...props} boats={boats}>}>
+<Route path="/listings/:id" component={(props) => <BoatDetails {...props} boats={boats} /> } />
 ```
 
 Note the `/:id` following the `/listings` portion of the `path`. What we've done here by using the colon `:` followed by `id` is establish a variable `id` _within our URL pattern_ for this route, or in other words, an id param.
