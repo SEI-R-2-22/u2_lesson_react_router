@@ -1,10 +1,13 @@
 import React from 'react'
 
-function Nav() {
+const Nav = () => {
+  
   return (
     <nav className="navbar">
       <h4>Starboard</h4>
-      <div>{/* create NavLinks here */}</div>
+      <div>
+        {/* create Links here */}
+      </div>
     </nav>
   )
 }

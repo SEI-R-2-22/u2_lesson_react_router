@@ -1,12 +1,10 @@
 import React, { useState } from 'react'
-import boatArr from './data/boats'
+import boatsArray from './data/boats'
 import './styles/App.css'
-// imports here
 
-// The boatArr is passed into state as the initial state for 'boats' in App.js
-
-function App() {
-  const [boats, setBoats] = useState(boatArr)
+const App = () => {
+  // The boatsArray is passed into state as the initial state for 'boats' in App.js
+  const [boats, setBoats] = useState(boatsArray)
   const [newBoat, setNewBoat] = useState({
     id: '',
     name: '',
@@ -18,12 +16,12 @@ function App() {
   const addBoat = (e) => {
     e.preventDefault()
     const currentBoats = boats
-    const newBoat = {
+    const createdBoat = {
       ...newBoat,
       id: parseInt(boats.length + 1),
       price: parseInt(newBoat.price)
     }
-    currentBoats.push(newBoat)
+    currentBoats.push(createdBoat)
     setBoats(currentBoats)
     setNewBoat({ id: '', name: '', img: '', description: '', price: '' })
   }
@@ -34,8 +32,12 @@ function App() {
 
   return (
     <div className="App">
-      <header>{/* Import Nav here */}</header>
-      <main>{/* Create Routes to page components here */}</main>
+      <header>
+        {/* Import Nav here */}
+      </header>
+      <main>
+        {/* Create Routes to components here */}
+      </main>
     </div>
   )
 }

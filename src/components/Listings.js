@@ -1,10 +1,9 @@
 import React from 'react'
 
-function Listings(props) {
-
+const Listings = (props) => {
 
   const showBoat = (boat) => {
-    props.history.push(`/listings/${boat.id}`)
+
   }
 
   return (

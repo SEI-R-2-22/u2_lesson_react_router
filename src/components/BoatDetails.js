@@ -1,17 +1,12 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
-
-function BoatDetails (props) {
+const BoatDetails = (props) => {
 
   const [selectedBoat, setBoat] = useState('')
 
   useEffect(() => {
-    let selectedBoat = props.boats.find(
-      (boat) => boat.id === parseInt(props.match.params.id)
-    )
-    setBoat(selectedBoat)
+    
   }, [])
-  
 
   return selectedBoat ? (
     <div className="detail">
@@ -30,7 +25,6 @@ function BoatDetails (props) {
       </div>
     </div>
   ) : null;
-
 }
 
 export default BoatDetails
