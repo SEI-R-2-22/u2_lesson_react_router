@@ -210,7 +210,7 @@ Now that we have a route to view a list of all of our boats, how would we go abo
 - We'll also render the `BoatDetails` component inside of an anonymous function since we'll need to pass props to it as well.
 
 ```js
-<Route path="/listings/:id" component={(props) => <BoatDetails {...props} boats={boats}>}>
+<Route path="/listings/:id" component={(props) => <BoatDetails {...props} boats={boats} /> } />
 ```
 
 Note the `/:id` following the `/listings` portion of the `path`. What we've done here by using the colon `:` followed by `id` is establish a variable `id` _within our URL pattern_ for this route, or in other words, an id param.
