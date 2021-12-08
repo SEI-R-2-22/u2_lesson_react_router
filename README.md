@@ -77,8 +77,12 @@ Now we'll start by creating a `<Route/>` compoment within the `<main/>` tag and 
 ...
   return (
     <div className="App">
-      <header>{/* Import Nav here */}</header>
-      <main>{/* Create Routes to page components here */}</main>
+      <header>
+        <Nav />
+      </header>
+      <main>
+        <Route path="/" component={ Home } />
+      </main>
     </div>
   )
 ```
@@ -96,8 +100,6 @@ Now we'll start by creating a `<Route/>` compoment within the `<main/>` tag and 
 ## React Router Props
 
 Now that we've added in our `Home` page, let's spin up the React app with `npm start`.
-
-Inside of `Home.js`, add in console.log of `props`.
 
 We haven't passed in any props to the component in our route, but you might notice that we now have access to `location`,`history`, and `match` props from within our `Home` component.
 
