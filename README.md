@@ -290,7 +290,7 @@ useEffect(() => {
     (boat) => boat.id === parseInt(props.match.params.id)
   )
   setBoat(selectedBoat)
-}, [])
+}, [props.boats, props.match.params.id])
 
 //...
 ```
