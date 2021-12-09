@@ -55,6 +55,12 @@ h1, h2, h3, h4 {
   margin-left: 0.5em;
 }
 
+.boat-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
 .boat-card {
   padding: 1em;
   width: 18em;
