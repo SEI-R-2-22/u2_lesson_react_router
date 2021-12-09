@@ -7,7 +7,7 @@ const Listings = (props) => {
   }
 
   return (
-    <div>
+    <div className="boat-grid">
       {
       props.boats.map((boat) => (
         <div className="boat-card" onClick={() => showBoat(boat)}>
