@@ -30,7 +30,7 @@ React Router makes it easy for us to route URLs, not to different pages, but by 
 First, we need to install `react-router-dom` and save it as a dependency.  You will need to manually install this any time you want to use it.
 
 ```sh
-npm install react-router-dom@6
+npm install react-router-dom
 ```
 
 To configure our current application to use React Router, we'll need to import the `BrowserRouter` component into `index.js` and use it as a wrapper for our `App` component. `BrowserRouter` will, in turn, render `App` through which all the rest of our components will be rendered and give us access to router components:
@@ -284,7 +284,7 @@ let navigate = useNavigate()
 
 const handleSubmit = (e) => {
   props.addBoat(e)
-  navigate('listings')
+  navigate('/listings')
 }
 
 //...
@@ -312,7 +312,7 @@ With React Router, we're able to create navigation in our applications with spec
 - `<Link/>` - Used to link to different routes, usually from within a component rendered by a route
 - `element` - Used to render a component for a route
 - `useParams` - a hook provided by React Router to help with navigation associated with dynamic route parameters
-- `useHistory` - a hook provided by React Router to add routes to a browsers navigation history
+- `useNavigate` - a hook provided by React Router to add routes to a browsers navigation history
 
 ## Resources
 
