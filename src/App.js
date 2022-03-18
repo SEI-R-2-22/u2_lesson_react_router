@@ -1,6 +1,12 @@
 import { useState } from 'react'
 import boatsArray from './data/boats'
 import './styles/App.css'
+import { Routes, Route } from 'react-router-dom'
+import Home from './components/Home'
+import Nav from './components/Nav'
+import Listings from './components/Listings'
+import BoatDetails from './components/BoatDetails'
+import BoatForm from './components/BoatForm'
 
 const App = () => {
   // The boatsArray is passed into state as the initial state for 'boats' in App.js
@@ -33,10 +39,15 @@ const App = () => {
   return (
     <div className="App">
       <header>
-        {/* Import Nav here */}
+        <Nav />
       </header>
       <main>
-        {/* Create Routes to components here */}
+        <Routes>
+          <Route index element={ <Home /> } />
+          <Route path='/listings' element={ <Listings boats={boats} /> } />
+          <Route path='/listings/:id' element={ <BoatDetails boats={boats} /> } />
+          <Route path='/new' element={ <BoatForm newBoat={newBoat} handleChange={handleChange} addBoat={addBoat} /> } />
+        </Routes>
       </main>
     </div>
   )

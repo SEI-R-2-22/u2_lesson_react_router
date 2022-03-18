@@ -65,7 +65,7 @@ Next, in `App.js`, we need to import all of the components we want to use for pa
 ```js
 // App.js
 
-import React, { useState } from 'react'
+import { useState } from 'react'
 import boatsArray from './data/boats'
 import './styles/App.css'
 import { Routes, Route } from 'react-router-dom'
@@ -113,7 +113,6 @@ Now let's add in a way of getting back to the `Home` page. Import the `Nav` comp
 Now, we'll import the `<Link/>` component from `react-router-dom` in our `Nav` component to set up a link back to the `Home` page:
 
 ```js
-import React from 'react'
 import { Link } from 'react-router-dom'
 
 const Nav = () => {
@@ -145,13 +144,13 @@ Let's add in another route to `App.js`...
 - Import the `Listings` component and add this route to `App.js` just below our other `<Route/>`.
 
 ```jsx
-<Route path="listings" element={ <Listings /> }/>
+<Route path="/listings" element={ <Listings /> }/>
 ```
 
 You might notice that the `Listings` component is making use of a prop called `boats`, however we aren't currently passing any props to it. Let's fix that.
 
 ```jsx
-<Route path="listings" element={ <Listings boats={boats} />} />
+<Route path="/listings" element={ <Listings boats={boats} />} />
 ```
 
 - Here we've passed in the custom prop of `boats`, which gives our `Listings` component access to the array of boats in state.
@@ -162,7 +161,7 @@ Now that we've added in the route, our boats should be rendering in our `Listing
 - It should have a `to` prop of `'listings'` to connect to the route we've just set up.
 
 ```jsx
-<Link to="listings">Listings</Link>
+<Link to="/listings">Listings</Link>
 ```
 
 ---

@@ -1,7 +1,11 @@
+import { useNavigate } from 'react-router-dom'
+
 const Listings = (props) => {
 
-  const showBoat = (boat) => {
+  let navigate = useNavigate()
 
+  const showBoat = (boat) => {
+    navigate(`${boat.id}`)
   }
 
   return (
