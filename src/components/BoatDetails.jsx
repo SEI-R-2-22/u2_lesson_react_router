@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, Link } from 'react-router-dom'
 
 const BoatDetails = (props) => {
 
@@ -29,6 +29,7 @@ const BoatDetails = (props) => {
         </div>
         <p>{boat.description}</p>
       </div>
+      <Link to="/listings"><button>Back</button></Link>
     </div>
   ) : null;
 }

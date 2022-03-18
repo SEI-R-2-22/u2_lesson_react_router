@@ -146,6 +146,7 @@ button, input {
 button {
   padding: 0.5em 2em;
   background-color: white;
+  border: 2px solid black;
   font-family: 'Georgia';
   font-weight: bold;
   cursor: pointer;
