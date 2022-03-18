@@ -1,5 +1,3 @@
-import React from 'react'
-
 const BoatForm = (props) => {
   
   const handleSubmit = (e) => {
